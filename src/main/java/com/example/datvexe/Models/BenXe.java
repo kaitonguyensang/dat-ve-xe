@@ -1,5 +1,9 @@
 package com.example.datvexe.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,10 +27,11 @@ public class BenXe {
     @Column(name = "diachi")
     private String diaChi;
 
-    @OneToMany(mappedBy ="benXeDi")
-
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,mappedBy ="benXeDi")
+    @JsonIgnore
     private List<TuyenXe> tuyenXeDi;
 
-    @OneToMany(mappedBy ="benXeDen")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,mappedBy ="benXeDen")
+    @JsonIgnore
     private List<TuyenXe> tuyenXeDen;
 }

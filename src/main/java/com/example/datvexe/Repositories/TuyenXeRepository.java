@@ -17,6 +17,6 @@ public interface TuyenXeRepository extends JpaRepository<TuyenXe, Long> {
 
     List<TuyenXe> findAll();
 
-    @Query("Select OBJECT(t) From TuyenXe t where t.benXeDi=?1 and t.benXeDen=?2 ")
-    List<TuyenXe> findTuyenXeByBenXeDiBenXeDenNgayDi(BenXe benXeDi, BenXe benXeDen);
+    @Query("Select OBJECT(t) From TuyenXe t where t.benXeDi=?1 and t.benXeDen=?2 and t.thoiGianKhoiHanh = ?3 ")
+    List<TuyenXe> findTuyenXeByBenXeDiBenXeDenNgayDi(BenXe benXeDi, BenXe benXeDen, Date thoiGianKhoiHanh);
 }

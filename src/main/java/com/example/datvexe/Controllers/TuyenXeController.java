@@ -34,7 +34,7 @@ public class TuyenXeController {
     }
 
 
-    @GetMapping("/")
+    @GetMapping("/find")
     public DataResponse getTuyenXeByBenXeDiBenXeDenNgayDi(@RequestBody TuyenXeRequest tuyenXeRequest){
         if(tuyenXeRequest == null)throw new CustomException("400","Missing request!!!");
         List<TuyenXe> tuyenXeList = tuyenXeService.getTuyenXeByBenXeDiBenXeDenNgayDi(tuyenXeRequest);

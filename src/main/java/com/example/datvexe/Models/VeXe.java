@@ -1,5 +1,7 @@
 package com.example.datvexe.Models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,17 +22,21 @@ public class VeXe {
     private int soGhe;
 
     @Column(name = "ngaydat")
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date ngayDat;
 
     @Column(name = "ngaynhan")
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date ngayNhan;
 
     @OneToOne
     @JoinColumn(name = "tuyenxe_id",referencedColumnName = "id")
+    @JsonIgnore
     private TuyenXe tuyenXe;
 
     @ManyToOne
     @JoinColumn(name = "user_id",referencedColumnName = "id")
+    @JsonIgnore
     private User user;
 
     @OneToOne(mappedBy ="veXe")

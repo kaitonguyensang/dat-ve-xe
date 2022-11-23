@@ -1,6 +1,7 @@
 package com.example.datvexe.Models;
 
 
+import com.example.datvexe.common.TrangThai;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,7 +28,8 @@ public class NhaXe {
     private String moTaNgan;
 
     @Column(name = "trangthaihoatdong")
-    private int trangThaiHoatDong;
+    @Enumerated(EnumType.STRING)
+    private TrangThai trangThaiHoatDong;
 
     @OneToOne
     @JoinColumn(name = "taikhoan_id",referencedColumnName = "id")

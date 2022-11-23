@@ -1,6 +1,7 @@
 package com.example.datvexe.Payloads.Requests;
 
 import com.example.datvexe.Models.BenXe;
+import com.example.datvexe.common.TrangThai;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +15,7 @@ public class TuyenXeRequest {
     private Date thoiGianKhoiHanh;
     private Date ngayDen;
     private int giaVe;
-    private int trangThai;
+    private TrangThai trangThai;
     private Long benXeDi;
     private Long benXeDen;
 }

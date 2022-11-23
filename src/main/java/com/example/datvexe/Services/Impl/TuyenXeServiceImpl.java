@@ -6,6 +6,7 @@ import com.example.datvexe.Payloads.Requests.TuyenXeRequest;
 import com.example.datvexe.Repositories.BenXeRepository;
 import com.example.datvexe.Repositories.TuyenXeRepository;
 import com.example.datvexe.Services.TuyenXeService;
+import com.example.datvexe.common.TrangThai;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,7 +51,7 @@ public class TuyenXeServiceImpl implements TuyenXeService {
         if(benXeDi == null) return null;
         BenXe benXeDen = benXeRepository.findOneById(tuyenXeRequest.getBenXeDen());
         if(benXeDen == null) return null;
-        return tuyenXeRepository.findTuyenXeByBenXeDiBenXeDenNgayDi(benXeDi,benXeDen);
+        return tuyenXeRepository.findTuyenXeByBenXeDiBenXeDenNgayDi(benXeDi,benXeDen, tuyenXeRequest.getThoiGianKhoiHanh());
     }
 
     public TuyenXe addNewTuyenXe(TuyenXeRequest tuyenXeRequest) {
