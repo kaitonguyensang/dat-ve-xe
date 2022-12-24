@@ -17,7 +17,7 @@ public class BenXeServiceImpl implements BenXeService {
     public BenXe convertBenXeRequestToBenXe(BenXeRequest benXeRequest, BenXe benXe) {
         benXe.setTinhThanh(benXeRequest.getTinhThanh());
         benXe.setTenBenXe(benXeRequest.getTenBenXe());
-        benXe.setDiaChiChiTiet(benXeRequest.getDiChiChiTiet());
+        benXe.setDiaChiChiTiet(benXeRequest.getDiaChiChiTiet());
         return benXe;
     }
 
@@ -29,9 +29,11 @@ public class BenXeServiceImpl implements BenXeService {
         return benXeRepository.findOneById(id);
     }
 
-    public BenXe addNewBenXe(BenXeRequest benXe) {
+    public BenXe addNewBenXe(BenXeRequest benXeRequest) {
+        BenXe benXeCheck =benXeRepository.findBenXeByTenBenXeLike(benXeRequest.getTenBenXe());
+        if (benXeCheck != null) return null;
         BenXe newBenXe = new BenXe();
-        newBenXe = convertBenXeRequestToBenXe(benXe, newBenXe);
+        newBenXe = convertBenXeRequestToBenXe(benXeRequest, newBenXe);
         return benXeRepository.save(newBenXe);
     }
 

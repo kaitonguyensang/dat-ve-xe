@@ -20,7 +20,7 @@ public class TuyenXeController {
 
     @GetMapping("/{id}")
     public DataResponse addNewTuyenXe(@PathVariable("id") String id){
-        if(id==null||id =="") throw new CustomException("404","Missing Field");
+        if(id==null) throw new CustomException("404","Missing Field");
         Long tuyenXeId = Long.valueOf(id);
         TuyenXe tuyenXe = tuyenXeService.findOneById(tuyenXeId);
         if(tuyenXe==null) return new DataResponse("400","Khong tim duoc tuyen xe!!!");
@@ -54,6 +54,8 @@ public class TuyenXeController {
     @PostMapping("/add")
     public DataResponse addNewTuyenXe(@RequestBody TuyenXeRequest tuyenXeRequest){
         if(tuyenXeRequest == null)throw new CustomException("404", "Missing Field");
-        return new DataResponse("200", tuyenXeService.addNewTuyenXe(tuyenXeRequest));
+        TuyenXe tuyenXe = tuyenXeService.addNewTuyenXe(tuyenXeRequest);
+        if (tuyenXe==null)throw new CustomException("400","Khong tim thay ben xe!!!");
+        return new DataResponse("200", tuyenXe);
     }
 }

@@ -26,10 +26,10 @@ public class TuyenXeServiceImpl implements TuyenXeService {
         tuyenXe.setThoiGianHanhTrinh(tuyenXeRequest.getThoiGianHanhTrinh());
         tuyenXe.setGiaVe(tuyenXeRequest.getGiaVe());
         tuyenXe.setTrangThai(tuyenXeRequest.getTrangThai());
-        BenXe benXeDi = benXeRepository.findOneById(tuyenXeRequest.getBenXeDi());
+        BenXe benXeDi = benXeRepository.findBenXeByTenBenXeLike(tuyenXeRequest.getTenBenXeDi());
         if(benXeDi == null) return null;
         tuyenXe.setBenXeDi(benXeDi);
-        BenXe benXeDen = benXeRepository.findOneById(tuyenXeRequest.getBenXeDen());
+        BenXe benXeDen = benXeRepository.findBenXeByTenBenXeLike(tuyenXeRequest.getTenBenXeDen());
         if(benXeDen == null) return null;
         tuyenXe.setBenXeDen(benXeDen);
         return tuyenXe;
@@ -48,9 +48,9 @@ public class TuyenXeServiceImpl implements TuyenXeService {
     }
 
     public List<TuyenXe> getTuyenXeByBenXeDiBenXeDenNgayDi(TuyenXeRequest tuyenXeRequest){
-        BenXe benXeDi = benXeRepository.findOneById(tuyenXeRequest.getBenXeDi());
+        BenXe benXeDi = benXeRepository.findBenXeByTenBenXeLike(tuyenXeRequest.getTenBenXeDi());
         if(benXeDi == null) return null;
-        BenXe benXeDen = benXeRepository.findOneById(tuyenXeRequest.getBenXeDen());
+        BenXe benXeDen = benXeRepository.findBenXeByTenBenXeLike(tuyenXeRequest.getTenBenXeDen());
         if(benXeDen == null) return null;
         return tuyenXeRepository.findTuyenXeByBenXeDiLikeAndBenXeDenLikeAndNgayDiLike(benXeDi,benXeDen, tuyenXeRequest.getNgayDi());
     }
@@ -62,6 +62,7 @@ public class TuyenXeServiceImpl implements TuyenXeService {
     public TuyenXe addNewTuyenXe(TuyenXeRequest tuyenXeRequest) {
         TuyenXe tuyenXe = new TuyenXe();
         tuyenXe= convertTuyenXeRequestToTuyenXe(tuyenXeRequest,tuyenXe);
+        if (tuyenXe==null) return null;
         return tuyenXeRepository.save(tuyenXe);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.datvexe.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,5 +24,6 @@ public class LoaiXe {
     private Integer sucChua;
 
     @OneToMany(mappedBy ="loaiXe")
+    @JsonIgnore
     private List<Xe> xe;
 }

@@ -36,7 +36,9 @@ public class BenXeController {
     @PostMapping("/add")
     public DataResponse addNewBenXe(@RequestBody BenXeRequest benXeRequest) {
         if (benXeRequest == null) throw  new CustomException("404", "Missing field");
-        return new DataResponse("200", benXeService.addNewBenXe(benXeRequest));
+        BenXe newBenXe = benXeService.addNewBenXe(benXeRequest);
+        if (newBenXe==null) throw new CustomException("400","Ten ben xe da ton tai!!!");
+        return new DataResponse("200", newBenXe);
     }
 
     @PutMapping("/{id}")

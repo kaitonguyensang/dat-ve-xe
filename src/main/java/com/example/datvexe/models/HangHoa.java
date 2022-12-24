@@ -1,4 +1,5 @@
 package com.example.datvexe.models;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,9 +35,11 @@ public class HangHoa {
 
     @ManyToOne
     @JoinColumn(name = "tuyenxe_id",referencedColumnName = "id")
+    @JsonIgnore
     private TuyenXe tuyenXe;
 
     @ManyToOne
     @JoinColumn(name = "user_id",referencedColumnName = "id")
+    @JsonIgnore
     private User user;
 }

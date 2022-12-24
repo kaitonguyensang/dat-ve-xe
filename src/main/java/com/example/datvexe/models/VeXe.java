@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -23,14 +24,12 @@ public class VeXe {
     private int soGhe;
 
     @Column(name = "ngaydat")
-    @JsonFormat(pattern="yyyy-MM-dd")
-    private Date ngayDat;
+    private LocalDate ngayDat;
 
     @Column(name = "ngaynhan")
-    @JsonFormat(pattern="yyyy-MM-dd")
-    private Date ngayNhan;
+    private LocalDate ngayNhan;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "tuyenxe_id",referencedColumnName = "id")
     @JsonIgnore
     private TuyenXe tuyenXe;

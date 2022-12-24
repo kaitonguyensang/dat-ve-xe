@@ -1,6 +1,9 @@
 package com.example.datvexe.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,11 +35,14 @@ public class NhaXe {
 
     @OneToOne
     @JoinColumn(name = "taikhoan_id",referencedColumnName = "id")
+    @JsonManagedReference
     private TaiKhoan taiKhoan;
 
     @OneToMany(mappedBy ="nhaXe")
+    @JsonIgnore
     private List<Xe> xe;
 
     @OneToMany(mappedBy ="nhaXe")
+    @JsonIgnore
     private List<DanhGia> danhGia;
 }

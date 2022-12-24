@@ -4,7 +4,7 @@ import com.example.datvexe.common.Role;
 import com.example.datvexe.handler.CustomException;
 import com.example.datvexe.payloads.requests.SignUpRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
-import com.example.datvexe.services.impl.SignUpServiceImpl;
+import com.example.datvexe.services.SignUpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SignUpController {
 
     @Autowired
-    SignUpServiceImpl signUpService;
+    SignUpService signUpService;
 
     @PostMapping("/add")
     public DataResponse addTaiKhoan(@RequestBody SignUpRequest signUpRequest){

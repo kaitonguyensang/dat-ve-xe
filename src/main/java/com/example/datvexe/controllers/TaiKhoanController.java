@@ -2,13 +2,11 @@ package com.example.datvexe.controllers;
 
 import com.example.datvexe.handler.CustomException;
 import com.example.datvexe.models.TaiKhoan;
+import com.example.datvexe.payloads.requests.TaiKhoanRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
 import com.example.datvexe.services.TaiKhoanService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,5 +31,13 @@ public class TaiKhoanController {
         List<TaiKhoan> listTaiKhoan = taiKhoanService.getAll();
         if (listTaiKhoan == null) return new DataResponse("404","Khong co tai khoan nao!!!");
         return new DataResponse("200",listTaiKhoan);
+    }
+
+    @PutMapping("{id}")
+    public DataResponse updateTaiKhoan(@RequestBody TaiKhoanRequest taiKhoanRequest){
+        if (taiKhoanRequest == null) throw new CustomException("400","Missing field!!!");
+        TaiKhoan taiKhoanupdate =  taiKhoanService.updateTaiKhoan(taiKhoanRequest);
+        if (taiKhoanupdate == null) throw new CustomException("400", "Tai khoan khong ton tai!!!");
+        return new DataResponse("200",taiKhoanupdate);
     }
 }

@@ -5,10 +5,9 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
+
 
 @Data
 @Setter
@@ -19,6 +18,6 @@ public class TuyenXeRequest {
     private String thoiGianHanhTrinh;
     private int giaVe;
     private TrangThai trangThai;
-    private Long benXeDi;
-    private Long benXeDen;
+    private String tenBenXeDi;
+    private String tenBenXeDen;
 }

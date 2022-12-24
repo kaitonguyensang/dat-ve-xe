@@ -2,6 +2,9 @@ package com.example.datvexe.models;
 
 import com.example.datvexe.common.Role;
 import com.example.datvexe.common.TrangThai;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,11 +35,14 @@ public class TaiKhoan {
     private TrangThai trangThaiHoatDong;
 
     @OneToOne(mappedBy ="taiKhoan")
+    @JsonBackReference
     private Admin admin;
 
     @OneToOne(mappedBy ="taiKhoan")
+    @JsonBackReference
     private User user;
 
     @OneToOne(mappedBy ="taiKhoan")
+    @JsonBackReference
     private NhaXe nhaXe;
 }

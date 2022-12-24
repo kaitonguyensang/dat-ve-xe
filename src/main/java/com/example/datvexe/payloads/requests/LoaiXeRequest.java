@@ -7,8 +7,7 @@ import lombok.Setter;
 @Data
 @Setter
 @Getter
-public class BenXeRequest {
-    private String tenBenXe;
-    private String tinhThanh;
-    private String diaChiChiTiet;
+public class LoaiXeRequest {
+    String tenLoaiXe;
+    Integer sucChua;
 }
