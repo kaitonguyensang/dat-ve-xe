@@ -117,16 +117,13 @@ public class SignUpServiceImpl implements SignUpService {
         int check = checkInfo(signUpRequest);
         if (check!=5) return check;
 
+        NhaXe nhaXe = nhaXeRepository.findNhaXeByTenNhaXe(signUpRequest.getTenNhaXe());
+        if (nhaXe != null) return 6;
         TaiKhoan taiKhoanNew= convertSignUpToTaiKhoan(signUpRequest);
         TaiKhoan taiKhoanAdd = taiKhoanRepository.save(taiKhoanNew);
-        TaiKhoan taiKhoanOfNhaXe = new TaiKhoan();
-        if (taiKhoanAdd != null){
-            taiKhoanOfNhaXe = taiKhoanRepository.findTaiKhoanByUsername(taiKhoanAdd.getUsername());
-        }
-        NhaXe nhaXeNew = convertSignUpToNhaXe(signUpRequest,taiKhoanOfNhaXe);
-        NhaXe nhaXeAdd = nhaXeRepository.save(nhaXeNew);
-        if (nhaXeAdd != null)return 5;
-        else return 6;
+        NhaXe nhaXeNew = convertSignUpToNhaXe(signUpRequest,taiKhoanAdd);
+        nhaXeRepository.save(nhaXeNew);
+        return 5;
     }
     public int addTaiKhoanAdmin(SignUpRequest signUpRequest) {
 

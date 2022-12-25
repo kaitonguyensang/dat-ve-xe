@@ -1,5 +1,6 @@
 package com.example.datvexe.models;
 
+import com.example.datvexe.common.TrangThai;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,6 +27,10 @@ public class BenXe {
 
     @Column(name = "tinhthanh")
     private String tinhThanh;
+
+    @Column(name = "trangthai")
+    @Enumerated(EnumType.STRING)
+    private TrangThai trangThai;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,mappedBy ="benXeDi")
     @JsonIgnore

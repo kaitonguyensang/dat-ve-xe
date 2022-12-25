@@ -1,6 +1,7 @@
 package com.example.datvexe.models;
 
 import com.example.datvexe.common.HinhThucThanhToan;
+import com.example.datvexe.common.TrangThai;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -39,7 +40,10 @@ public class VeXe {
     @JsonIgnore
     private User user;
 
-    @Enumerated
+    @Column(name = "trangthaihoatdong")
+    @Enumerated(EnumType.STRING)
     private HinhThucThanhToan hinhThucThanhToan;
 
+    @Column(name = "xacthuc")
+    private TrangThai trangThai;
 }

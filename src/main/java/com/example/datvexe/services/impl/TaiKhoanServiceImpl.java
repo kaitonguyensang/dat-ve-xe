@@ -36,7 +36,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     }
 
     public TaiKhoan updateTaiKhoan(TaiKhoanRequest taiKhoanRequest){
-        TaiKhoan taiKhoanCheck = taiKhoanRepository.findTaiKhoanByUsername(taiKhoanRequest.getUsername());
+        TaiKhoan taiKhoanCheck = taiKhoanRepository.findTaiKhoanById(taiKhoanRequest.getId());
         if(taiKhoanCheck == null) return null;
         TaiKhoan taiKhoanUpdate = convertTaiKhoanRequestToTaiKhoan(taiKhoanRequest, taiKhoanCheck);
         taiKhoanUpdate = taiKhoanRepository.save(taiKhoanUpdate);

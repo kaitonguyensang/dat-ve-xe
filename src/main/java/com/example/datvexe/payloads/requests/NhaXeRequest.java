@@ -9,16 +9,19 @@ import lombok.Setter;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
-@Data
 @Getter
 @Setter
-public class TaiKhoanRequest {
-    @Enumerated(EnumType.STRING)
-    private Role role;
-
+@Data
+public class NhaXeRequest {
     private Long id;
+    private String tenNhaXe;
+    private String sdt;
     private String username;
     private String password;
+    private String moTaNgan;
+    private String diaChi;
     @Enumerated(EnumType.STRING)
     private TrangThai trangThaiHoatDong;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }

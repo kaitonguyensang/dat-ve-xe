@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/taikhoan")
 public class TaiKhoanController {
 
@@ -37,7 +38,7 @@ public class TaiKhoanController {
     public DataResponse updateTaiKhoan(@RequestBody TaiKhoanRequest taiKhoanRequest){
         if (taiKhoanRequest == null) throw new CustomException("400","Missing field!!!");
         TaiKhoan taiKhoanupdate =  taiKhoanService.updateTaiKhoan(taiKhoanRequest);
-        if (taiKhoanupdate == null) throw new CustomException("400", "Tai khoan khong ton tai!!!");
+        if (taiKhoanupdate == null) throw new CustomException("404", "Tai khoan khong ton tai!!!");
         return new DataResponse("200",taiKhoanupdate);
     }
 }

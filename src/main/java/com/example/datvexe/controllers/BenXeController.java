@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/benxe")
 public class BenXeController {
 
@@ -19,23 +20,30 @@ public class BenXeController {
 
     @GetMapping("/{id}")
     public DataResponse getBenXeById(@PathVariable("id") String id) {
-        if (id == null) throw new CustomException("404", "Missing field");
+        if (id == null) throw new CustomException("400", "Missing field");
         Long benXeId = Long.valueOf(id);
         BenXe benXe = benXeService.findBenXeById(benXeId);
         if (benXe == null) throw new CustomException("404", "Khong tim thay ben xe!!!!");
         return new DataResponse("200", benXe);
     }
 
-    @GetMapping("/all")
-    public DataResponse getAll() {
-        List<BenXe> benXeList = benXeService.findAllBenXe();
+    @GetMapping("/all-admin")
+    public DataResponse getAllForAdmin() {
+        List<BenXe> benXeList = benXeService.findAllBenXeForAdmin();
+        if (benXeList.size() == 0) throw new CustomException("404", "Khong co ben xe!!!");
+        return new DataResponse("200", benXeList);
+    }
+
+    @GetMapping("/all-user")
+    public DataResponse getAllForUser() {
+        List<BenXe> benXeList = benXeService.findAllBenXeForUser();
         if (benXeList.size() == 0) throw new CustomException("404", "Khong co ben xe!!!");
         return new DataResponse("200", benXeList);
     }
 
     @PostMapping("/add")
     public DataResponse addNewBenXe(@RequestBody BenXeRequest benXeRequest) {
-        if (benXeRequest == null) throw  new CustomException("404", "Missing field");
+        if (benXeRequest == null) throw  new CustomException("400", "Missing field");
         BenXe newBenXe = benXeService.addNewBenXe(benXeRequest);
         if (newBenXe==null) throw new CustomException("400","Ten ben xe da ton tai!!!");
         return new DataResponse("200", newBenXe);
@@ -43,7 +51,7 @@ public class BenXeController {
 
     @PutMapping("/{id}")
     public DataResponse updateBenXe(@PathVariable("id") String id, @RequestBody BenXeRequest benXeRequest) {
-        if (benXeRequest == null) throw  new CustomException("404", "Missing field");
+        if (benXeRequest == null) throw  new CustomException("400", "Missing field");
         Long benXeId = Long.valueOf(id);
         BenXe benXe = benXeService.updateBenXe(benXeRequest,benXeId);
         if (benXe == null) throw new CustomException("404", "Khong tim thay ben xe!!!");

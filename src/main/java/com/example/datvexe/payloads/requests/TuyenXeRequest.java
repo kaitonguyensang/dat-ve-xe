@@ -20,4 +20,5 @@ public class TuyenXeRequest {
     private TrangThai trangThai;
     private String tenBenXeDi;
     private String tenBenXeDen;
+    private String bienSoXe;
 }

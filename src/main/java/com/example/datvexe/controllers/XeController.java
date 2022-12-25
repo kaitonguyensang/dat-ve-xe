@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/xe")
 public class XeController {
 
@@ -26,10 +27,10 @@ public class XeController {
 
     @GetMapping("/{id}")
     public DataResponse getXeById(@PathVariable("id") String id){
-        if (id == null) throw new CustomException("404","Missing field!!!");
+        if (id == null) throw new CustomException("400","Missing field!!!");
         Long xeId = Long.valueOf(id);
         Xe xe = xeService.getById(xeId);
-        if (xe == null) throw new CustomException("400","Khong tim thay xe!!!");
+        if (xe == null) throw new CustomException("404","Khong tim thay xe!!!");
         return new DataResponse("200",xe);
     }
 
@@ -37,9 +38,9 @@ public class XeController {
     public DataResponse addXe(@RequestBody XeRequest xeRequest){
         if (xeRequest == null) throw new CustomException("400", "Missing field!!!");
         DataResponse dataResponse = xeService.addXe(xeRequest);
-        if (dataResponse.getStatus() == "0") throw new CustomException("400", "Ten nha xe da ton tai!!!");
-        if (dataResponse.getStatus() == "1") throw new CustomException("400", "Khong ton tai nha xe!!!");
-        if (dataResponse.getStatus() == "2") throw new CustomException("400", "Khong ton tai loai xe!!!");
+        if (dataResponse.getStatus() == "0") throw new CustomException("404", "Ten xe da ton tai!!!");
+        if (dataResponse.getStatus() == "1") throw new CustomException("404", "Khong ton tai nha xe!!!");
+        if (dataResponse.getStatus() == "2") throw new CustomException("404", "Khong ton tai loai xe!!!");
         return new DataResponse("200",dataResponse.getObject());
     }
 }

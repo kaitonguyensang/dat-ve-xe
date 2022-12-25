@@ -9,10 +9,18 @@ import java.util.List;
 public interface TaiKhoanRepository extends JpaRepository<TaiKhoan, Long> {
 
     TaiKhoan findTaiKhoanById(Long id);
-
     List<TaiKhoan> findAll();
-
     TaiKhoan findTaiKhoanByUsername(String username);
-
     TaiKhoan save(TaiKhoan value);
+    TaiKhoan findTaiKhoanByAdmin_Id(Long id);
+    TaiKhoan findTaiKhoanByAdmin_Cmnd(String cmnd);
+    TaiKhoan findTaiKhoanByAdmin_Email(String email);
+    TaiKhoan findTaiKhoanByAdmin_Sdt(String sdt);
+    TaiKhoan findTaiKhoanByUser_Cmnd(String cmnd);
+    TaiKhoan findTaiKhoanByUser_Email(String email);
+    TaiKhoan findTaiKhoanByUser_Sdt(String sdt);
+    TaiKhoan findTaiKhoanByNhaXe_Sdt(String sdt);
+    TaiKhoan findTaiKhoanByNhaXe_TenNhaXe(String tenNhaXe);
+
+    TaiKhoan findTaiKhoanByNhaXe_Id(Long id);
 }

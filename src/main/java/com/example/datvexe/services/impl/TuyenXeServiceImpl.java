@@ -2,10 +2,12 @@ package com.example.datvexe.services.impl;
 
 import com.example.datvexe.models.BenXe;
 import com.example.datvexe.models.TuyenXe;
+import com.example.datvexe.models.Xe;
 import com.example.datvexe.payloads.requests.TuyenXeRequest;
 import com.example.datvexe.payloads.requests.TuyenXeRequestByAddress;
 import com.example.datvexe.repositories.BenXeRepository;
 import com.example.datvexe.repositories.TuyenXeRepository;
+import com.example.datvexe.repositories.XeRepository;
 import com.example.datvexe.services.TuyenXeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,9 @@ public class TuyenXeServiceImpl implements TuyenXeService {
     @Autowired
     BenXeRepository benXeRepository;
 
+    @Autowired
+    XeRepository xeRepository;
+
     public TuyenXe convertTuyenXeRequestToTuyenXe(TuyenXeRequest tuyenXeRequest, TuyenXe tuyenXe) {
         tuyenXe.setNgayDi(tuyenXeRequest.getNgayDi());
         tuyenXe.setGioDi(tuyenXeRequest.getGioDi());
@@ -32,6 +37,8 @@ public class TuyenXeServiceImpl implements TuyenXeService {
         BenXe benXeDen = benXeRepository.findBenXeByTenBenXeLike(tuyenXeRequest.getTenBenXeDen());
         if(benXeDen == null) return null;
         tuyenXe.setBenXeDen(benXeDen);
+        Xe xe = xeRepository.findXeByBienSoXe(tuyenXeRequest.getBienSoXe());
+        tuyenXe.setXe(xe);
         return tuyenXe;
     }
 

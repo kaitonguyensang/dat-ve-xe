@@ -55,4 +55,9 @@ public class TuyenXe {
     @JsonIgnore
     private List<HangHoa> hangHoa;
 
+    @ManyToOne
+    @JoinColumn(name = "xe_id", referencedColumnName = "id")
+    @JsonIgnore
+    private Xe xe;
+
 }

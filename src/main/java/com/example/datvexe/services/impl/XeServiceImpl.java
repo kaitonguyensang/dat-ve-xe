@@ -50,7 +50,7 @@ public class XeServiceImpl implements XeService {
 
     @Override
     public DataResponse addXe(XeRequest xeRequest) {
-        Xe xe = xeRepository.findByBienSoXe(xeRequest.getBienSoXe());
+        Xe xe = xeRepository.findXeByBienSoXe(xeRequest.getBienSoXe());
         if (xe != null) return new DataResponse("0","/");
         Xe xeNew = new Xe();
         DataResponse dataResponse = convertXeRequestToXe(xeRequest,xeNew);

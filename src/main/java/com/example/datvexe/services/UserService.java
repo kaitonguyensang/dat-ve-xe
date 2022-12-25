@@ -8,6 +8,5 @@ import java.util.List;
 @Component
 public interface UserService {
     User getUserById(Long userId);
-
     List<User> getAll();
 }

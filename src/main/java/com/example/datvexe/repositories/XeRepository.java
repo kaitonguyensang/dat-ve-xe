@@ -12,5 +12,5 @@ public interface XeRepository extends JpaRepository<Xe, Long> {
     List<Xe> findAll();
     Xe save(Xe value);
 
-    Xe findByBienSoXe(String bienSoXe);
+    Xe findXeByBienSoXe(String bienSoXe);
 }

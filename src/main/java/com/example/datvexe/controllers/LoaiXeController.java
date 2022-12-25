@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/loaixe")
 public class LoaiXeController {
 
@@ -21,7 +22,7 @@ public class LoaiXeController {
     public DataResponse getAll(){
         List<LoaiXe> loaiXeList;
         loaiXeList = loaiXeService.getAllLoaiXe();
-        if(loaiXeList==null) throw new CustomException("400", "Khong co loai xe nao!!!");
+        if(loaiXeList==null) throw new CustomException("404", "Khong co loai xe nao!!!");
         return new DataResponse("200", loaiXeList);
     }
 
@@ -30,7 +31,7 @@ public class LoaiXeController {
         if (id==null) throw new CustomException("400","Missing field!!");
         Long loaXeId = Long.valueOf(id);
         LoaiXe loaiXe = loaiXeService.getLoaiXeById(loaXeId);
-        if (loaiXe==null) throw new CustomException("400","Khong co loai xe nao theo yeu cau!!!");
+        if (loaiXe==null) throw new CustomException("404","Khong co loai xe nao theo yeu cau!!!");
         return new DataResponse("200",loaiXe);
     }
 

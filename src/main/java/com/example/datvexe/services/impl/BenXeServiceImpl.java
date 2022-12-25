@@ -1,5 +1,6 @@
 package com.example.datvexe.services.impl;
 
+import com.example.datvexe.common.TrangThai;
 import com.example.datvexe.models.BenXe;
 import com.example.datvexe.payloads.requests.BenXeRequest;
 import com.example.datvexe.repositories.BenXeRepository;
@@ -18,10 +19,15 @@ public class BenXeServiceImpl implements BenXeService {
         benXe.setTinhThanh(benXeRequest.getTinhThanh());
         benXe.setTenBenXe(benXeRequest.getTenBenXe());
         benXe.setDiaChiChiTiet(benXeRequest.getDiaChiChiTiet());
+        benXe.setTrangThai(benXeRequest.getTrangThai());
         return benXe;
     }
 
-    public List<BenXe> findAllBenXe() {
+    public List<BenXe> findAllBenXeForUser() {
+        return benXeRepository.findAllByTrangThai(TrangThai.ACTIVE);
+    }
+
+    public List<BenXe> findAllBenXeForAdmin() {
         return benXeRepository.findAll();
     }
 

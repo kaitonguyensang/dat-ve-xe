@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface NhaXeRepository extends JpaRepository<NhaXe, Long> {
     NhaXe findNhaXeBySdt(String sdt);
-
     NhaXe findNhaXeByTenNhaXe(String tenNhaXe);
-
+    NhaXe findNhaXeById(Long id);
 }

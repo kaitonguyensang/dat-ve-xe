@@ -1,9 +1,14 @@
 package com.example.datvexe.services.impl;
 
 import com.example.datvexe.handler.CustomException;
+import com.example.datvexe.models.Admin;
 import com.example.datvexe.models.NhaXe;
+import com.example.datvexe.models.TaiKhoan;
+import com.example.datvexe.payloads.requests.NhaXeRequest;
+import com.example.datvexe.payloads.requests.SignUpRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
 import com.example.datvexe.repositories.NhaXeRepository;
+import com.example.datvexe.repositories.TaiKhoanRepository;
 import com.example.datvexe.services.NhaXeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,13 +18,72 @@ import java.util.List;
 @Service
 public class NhaXeServiceImpl implements NhaXeService {
 
+
     @Autowired
     NhaXeRepository nhaXeRepository;
+
+    @Autowired
+    CommonServiceImpl commonService;
+
+    @Autowired
+    TaiKhoanRepository taiKhoanRepository;
+
+    public TaiKhoan convertNhaXeRequestToTaiKhoan(NhaXeRequest nhaXeRequest){
+        TaiKhoan taiKhoan = taiKhoanRepository.findTaiKhoanByNhaXe_Id(nhaXeRequest.getId());
+        if (taiKhoan == null) return null;
+        taiKhoan.setUsername(nhaXeRequest.getUsername());
+        taiKhoan.setPassword(nhaXeRequest.getPassword());
+        taiKhoan.setRole(nhaXeRequest.getRole());
+        taiKhoan.setTrangThaiHoatDong(nhaXeRequest.getTrangThaiHoatDong());
+        return taiKhoan;
+    }
+
+    public NhaXe convertNhaXeRequestToNhaXe(NhaXeRequest nhaXeRequest, NhaXe nhaXe, TaiKhoan taiKhoan){
+        nhaXe.setTenNhaXe(nhaXeRequest.getTenNhaXe());
+        nhaXe.setSdt(nhaXeRequest.getSdt());
+        nhaXe.setMoTaNgan(nhaXeRequest.getMoTaNgan());
+        nhaXe.setDiaChi(nhaXeRequest.getDiaChi());
+        return nhaXe;
+    }
+
+    public SignUpRequest convertNhaXeRequestToSignUpRequest(NhaXeRequest nhaXeRequest){
+        SignUpRequest signUpRequest = new SignUpRequest();
+        signUpRequest.setSdt(nhaXeRequest.getSdt());
+        signUpRequest.setMoTaNgan(nhaXeRequest.getMoTaNgan());
+        signUpRequest.setDiaChi(nhaXeRequest.getDiaChi());
+        signUpRequest.setTenNhaXe(nhaXeRequest.getTenNhaXe());
+        signUpRequest.setUsername(nhaXeRequest.getUsername());
+        signUpRequest.setPassword(nhaXeRequest.getPassword());
+        signUpRequest.setTrangThaiHoatDong(nhaXeRequest.getTrangThaiHoatDong());
+        signUpRequest.setRole(nhaXeRequest.getRole());
+        return signUpRequest;
+    }
 
     @Override
     public List<NhaXe> getAll() {
         List<NhaXe> listNhaXe = nhaXeRepository.findAll();
         if (listNhaXe.size() == 0) return null;
         return listNhaXe;
+    }
+
+    @Override
+    public NhaXe getNhaXeById(Long id) {
+        NhaXe nhaXe = nhaXeRepository.findNhaXeById(id);
+        if (nhaXe == null) return null;
+        return nhaXe;
+    }
+
+    @Override
+    public DataResponse updateNhaXe(NhaXeRequest nhaXeRequest) {
+        NhaXe nhaXe = nhaXeRepository.findNhaXeById(nhaXeRequest.getId());
+        if (nhaXe == null) return new DataResponse("1","/");
+        TaiKhoan taiKhoanNew = convertNhaXeRequestToTaiKhoan(nhaXeRequest);
+        if (taiKhoanNew == null) return new DataResponse("2","/");
+        NhaXe nhaXeNew = convertNhaXeRequestToNhaXe(nhaXeRequest, nhaXe, taiKhoanNew);
+        int check = commonService.checkInForUpdateAccount(convertNhaXeRequestToSignUpRequest(nhaXeRequest),taiKhoanNew);
+        if (check != 5) return new DataResponse(String.valueOf(check+2),"/");
+        taiKhoanRepository.save(taiKhoanNew);
+        NhaXe nhaXeUpdate= nhaXeRepository.save(nhaXeNew);
+        return new DataResponse("200",nhaXeUpdate);
     }
 }

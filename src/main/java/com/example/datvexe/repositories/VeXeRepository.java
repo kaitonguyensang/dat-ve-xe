@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface VeXeRepository extends JpaRepository<VeXe, Long> {
     List<VeXe> getVeXeByUser(User user);
+
+    VeXe findVeXeByTuyenXe_IdAndSoGhe(Long tuyenXeId, int soGhe);
 }

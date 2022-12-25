@@ -9,7 +9,9 @@ import java.util.List;
 @Component
 public interface BenXeService {
 
-    List<BenXe> findAllBenXe();
+    List<BenXe> findAllBenXeForUser();
+
+    List<BenXe> findAllBenXeForAdmin();
 
     BenXe findBenXeById(Long id);
 
