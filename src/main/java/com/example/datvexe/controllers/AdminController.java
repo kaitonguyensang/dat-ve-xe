@@ -16,7 +16,6 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("api/admin")
 public class AdminController {
-
     @Autowired
     AdminService adminService;
 

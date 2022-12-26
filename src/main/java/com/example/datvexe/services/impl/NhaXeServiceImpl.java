@@ -84,7 +84,7 @@ public class NhaXeServiceImpl implements NhaXeService {
 
     @Override
     public List<NhaXeResponse> getAllForUser() {
-        List<NhaXe> nhaXeList = nhaXeRepository.findNhaXesByTaiKhoanTrangThaiHoatDong_Active();
+        List<NhaXe> nhaXeList = nhaXeRepository.findNhaXesByTaiKhoanTrangThaiHoatDongLike(TrangThai.ACTIVE);
         List<NhaXeResponse> nhaXeResponseList = new ArrayList<NhaXeResponse>();
         for (NhaXe nhaXe : nhaXeList) {
             nhaXeResponseList.add(convertNhaXeToNhaXeResponse(nhaXe));
@@ -101,7 +101,7 @@ public class NhaXeServiceImpl implements NhaXeService {
 
     @Override
     public NhaXeResponse getNhaXeByIdForUser(Long id) {
-        NhaXe nhaXe = nhaXeRepository.findNhaXeByIdAAndTaiKhoanTrangThaiHoatDong_Active(id);
+        NhaXe nhaXe = nhaXeRepository.findNhaXeByIdAndTaiKhoanTrangThaiHoatDongLike(id, TrangThai.ACTIVE);
         return convertNhaXeToNhaXeResponse(nhaXe);
     }
 
