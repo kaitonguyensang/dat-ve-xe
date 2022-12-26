@@ -38,7 +38,7 @@ public class DanhGia {
 
     @ManyToOne
     @JoinColumn(name = "nhaxe_id", referencedColumnName = "id")
-    @JsonIgnore
+    @JsonManagedReference
     private NhaXe nhaXe;
 
 }
