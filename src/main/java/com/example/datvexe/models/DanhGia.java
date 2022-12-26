@@ -1,5 +1,6 @@
 package com.example.datvexe.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,7 +33,7 @@ public class DanhGia {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @JsonIgnore
+    @JsonManagedReference
     private User user;
 
     @ManyToOne

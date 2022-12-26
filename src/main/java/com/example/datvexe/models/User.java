@@ -41,7 +41,7 @@ public class User {
     private TaiKhoan taiKhoan;
 
     @OneToMany(mappedBy ="user")
-    @JsonIgnore
+    @JsonBackReference
     private List<DanhGia> danhGia;
 
     @OneToMany(mappedBy ="user")

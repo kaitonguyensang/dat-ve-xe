@@ -10,12 +10,10 @@ import java.util.List;
 @Component
 public interface TuyenXeService {
     TuyenXe findOneById(Long id);
-
     List<TuyenXe> getAllBenXe();
-
     List<TuyenXe> getTuyenXeByBenXeDiBenXeDenNgayDi(TuyenXeRequest tuyenXeRequest);
-
     TuyenXe addNewTuyenXe(TuyenXeRequest tuyenXeRequest);
-
-    public List<TuyenXe> getTuyenXeByBenXeDiBenXeDen(TuyenXeRequestByAddress tuyenXeRequest);
+    List<TuyenXe> getTuyenXeByBenXeDiBenXeDen(TuyenXeRequestByAddress tuyenXeRequest);
+    TuyenXe updateTuyenXe(TuyenXeRequest tuyenXeRequest, Long id);
+    Long deleteTuyenXe(Long id);
 }

@@ -11,6 +11,7 @@ import com.example.datvexe.services.TuyenXeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.crypto.Data;
 import java.util.List;
 
 
@@ -65,5 +66,25 @@ public class TuyenXeController {
         TuyenXe tuyenXe = tuyenXeService.addNewTuyenXe(tuyenXeRequest);
         if (tuyenXe==null)throw new CustomException("404","Khong tim thay ben xe!!!");
         return new DataResponse("200", tuyenXe);
+    }
+
+    @PutMapping("/{id}")
+    public DataResponse updateTuyenXe(@PathVariable("id") String id, @RequestBody TuyenXeRequest tuyenXeRequest){
+        if (id == null) throw new CustomException("400", "Missing field!!!");
+        Long tuyenXeId = Long.valueOf(id);
+        Xe xe = xeRepository.findXeByBienSoXe(tuyenXeRequest.getBienSoXe());
+        if (xe == null)throw new CustomException("404","Khong tim thay xe!!!");
+        TuyenXe tuyenXe = tuyenXeService.updateTuyenXe(tuyenXeRequest,tuyenXeId);
+        if (tuyenXe == null)throw new CustomException("404", "Khong tim thay ben xe!!!");
+        return new DataResponse("200", tuyenXe);
+    }
+
+    @DeleteMapping("{id}")
+    public DataResponse deleteTuyenXe(@PathVariable("id") String id){
+        if (id ==null) throw new CustomException("400", "Missing id!!!");
+        Long tuyenXeId = Long.valueOf(id);
+        tuyenXeId = tuyenXeService.deleteTuyenXe(tuyenXeId);
+        if (tuyenXeId == null) throw new CustomException("404","Khong tim thay tuyen xe!!!");
+        return new DataResponse("200", "Xoa thanh cong tuyen xe id: " + tuyenXeId);
     }
 }

@@ -1,4 +1,5 @@
 package com.example.datvexe.models;
+import com.example.datvexe.common.TrangThai;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,7 +32,7 @@ public class HangHoa {
     private String email;
 
     @Column(name = "trangthai")
-    private int trangThai;
+    private TrangThai trangThai;
 
     @ManyToOne
     @JoinColumn(name = "tuyenxe_id",referencedColumnName = "id")

@@ -66,10 +66,27 @@ public class TuyenXeServiceImpl implements TuyenXeService {
         return tuyenXeRepository.findTuyenXeByBenXeDi_TinhThanhContainsAndBenXeDen_TinhThanhContains(tuyenXeRequest.getBenXeDi(), tuyenXeRequest.getBenXeDen());
     }
 
+    @Override
+    public TuyenXe updateTuyenXe(TuyenXeRequest tuyenXeRequest, Long id) {
+        TuyenXe tuyenXe = tuyenXeRepository.findOneById(id);
+        TuyenXe tuyenXeNew = convertTuyenXeRequestToTuyenXe(tuyenXeRequest,tuyenXe);
+        if (tuyenXeNew==null) return null;
+        return tuyenXeRepository.save(tuyenXeNew);
+    }
+
+    @Override
+    public Long deleteTuyenXe(Long id) {
+        TuyenXe tuyenXeDelete = tuyenXeRepository.findOneById(id);
+        if (tuyenXeDelete == null) return null;
+        tuyenXeRepository.delete(tuyenXeDelete);
+        return tuyenXeDelete.getId();
+    }
+
     public TuyenXe addNewTuyenXe(TuyenXeRequest tuyenXeRequest) {
         TuyenXe tuyenXe = new TuyenXe();
         tuyenXe= convertTuyenXeRequestToTuyenXe(tuyenXeRequest,tuyenXe);
         if (tuyenXe==null) return null;
         return tuyenXeRepository.save(tuyenXe);
     }
+
 }
