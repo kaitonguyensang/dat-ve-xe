@@ -5,6 +5,7 @@ import com.example.datvexe.models.TuyenXe;
 import com.example.datvexe.models.Xe;
 import com.example.datvexe.payloads.requests.TuyenXeRequest;
 import com.example.datvexe.payloads.requests.TuyenXeRequestByAddress;
+import com.example.datvexe.payloads.requests.TuyenXeRequestByAddressDate;
 import com.example.datvexe.repositories.BenXeRepository;
 import com.example.datvexe.repositories.TuyenXeRepository;
 import com.example.datvexe.repositories.XeRepository;
@@ -87,6 +88,11 @@ public class TuyenXeServiceImpl implements TuyenXeService {
         tuyenXe= convertTuyenXeRequestToTuyenXe(tuyenXeRequest,tuyenXe);
         if (tuyenXe==null) return null;
         return tuyenXeRepository.save(tuyenXe);
+    }
+
+    @Override
+    public List<TuyenXe> getTuyenXeByBenXeDiBenXeDenNgayDi(TuyenXeRequestByAddressDate tuyenXeRequest) {
+        return tuyenXeRepository.findTuyenXeByBenXeDi_TinhThanhContainsAndBenXeDen_TinhThanhContainsAndAndNgayDiLike(tuyenXeRequest.getBenXeDi(), tuyenXeRequest.getBenXeDen(), tuyenXeRequest.getDate());
     }
 
 }

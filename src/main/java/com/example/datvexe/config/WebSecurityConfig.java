@@ -49,7 +49,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors() // Ngăn chặn request từ một domain khác
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/login").permitAll() // Cho phép tất cả mọi người truy cập vào địa chỉ này
+                .antMatchers("/api/login").permitAll()
+                .antMatchers("/api/tuyenxe/all").permitAll()
+                .antMatchers("/api/signup/add").permitAll()
+                .antMatchers("/api/tuyenxe/find-by-address-date").permitAll()
+                .antMatchers("/api/tuyenxe/find-by-address").permitAll()
+                .antMatchers("/api/benxe/benxeid/**").permitAll()
+                .antMatchers("/api/benxe/all-user").permitAll()
+                .antMatchers("/api/danhgia/nhaxe/**").permitAll()
+                .antMatchers("/api/nhaxe/user/all").permitAll()
+                .antMatchers("/api/nhaxe/user/**").permitAll()
+                .antMatchers("/api/tuyenxe/update/**").permitAll()
+                .antMatchers("/api/vexe/tuyenxe-id/**").permitAll()// Cho phép tất cả mọi người truy cập vào địa chỉ này
                 .anyRequest().authenticated(); // Tất cả các request khác đều cần phải xác thực mới được truy cập
 
         // Thêm một lớp Filter kiểm tra jwt

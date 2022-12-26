@@ -1,6 +1,7 @@
 package com.example.datvexe.services.impl;
 
 import com.example.datvexe.common.TrangThai;
+import com.example.datvexe.models.NhaXe;
 import com.example.datvexe.models.TuyenXe;
 import com.example.datvexe.models.User;
 import com.example.datvexe.models.VeXe;
@@ -13,6 +14,7 @@ import com.example.datvexe.services.VeXeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -44,6 +46,16 @@ public class VeXeServiceImpl implements VeXeService {
         List<VeXe> veXeList = veRepository.getVeXeByUser(user);
         return veXeList;
     }
+
+    @Override
+    public List<VeXe> getAllVeXeByTuyenXeId(Long tuyenXeId) {
+        TuyenXe tuyenXe = tuyenXeRepository.findOneById(tuyenXeId);
+        if(tuyenXe == null) return null;
+        List<VeXe> veXeList = veRepository.findVeXeByTuyenXe(tuyenXe);
+        if (veXeList == null) veXeList = new ArrayList<VeXe>();
+        return veXeList;
+    }
+
 
     @Override
     public DataResponse addVeXe(VeXeRequest veXeRequest) {

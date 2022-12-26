@@ -1,5 +1,6 @@
 package com.example.datvexe.services.impl;
 
+import com.example.datvexe.common.TrangThai;
 import com.example.datvexe.handler.CustomException;
 import com.example.datvexe.models.Admin;
 import com.example.datvexe.models.NhaXe;
@@ -7,13 +8,16 @@ import com.example.datvexe.models.TaiKhoan;
 import com.example.datvexe.payloads.requests.NhaXeRequest;
 import com.example.datvexe.payloads.requests.SignUpRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
+import com.example.datvexe.payloads.responses.NhaXeResponse;
 import com.example.datvexe.repositories.NhaXeRepository;
 import com.example.datvexe.repositories.TaiKhoanRepository;
 import com.example.datvexe.services.NhaXeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 @Service
 public class NhaXeServiceImpl implements NhaXeService {
@@ -34,6 +38,7 @@ public class NhaXeServiceImpl implements NhaXeService {
         taiKhoan.setUsername(nhaXeRequest.getUsername());
         taiKhoan.setPassword(nhaXeRequest.getPassword());
         taiKhoan.setRole(nhaXeRequest.getRole());
+        if (nhaXeRequest.getTrangThaiHoatDong()==null) nhaXeRequest.setTrangThaiHoatDong(TrangThai.ACTIVE);
         taiKhoan.setTrangThaiHoatDong(nhaXeRequest.getTrangThaiHoatDong());
         return taiKhoan;
     }
@@ -59,6 +64,17 @@ public class NhaXeServiceImpl implements NhaXeService {
         return signUpRequest;
     }
 
+    public NhaXeResponse convertNhaXeToNhaXeResponse(NhaXe nhaXe){
+        NhaXeResponse nhaXeResponse = new NhaXeResponse();
+        nhaXeResponse.setId(nhaXe.getId());
+        nhaXeResponse.setSdt(nhaXe.getSdt());
+        nhaXeResponse.setTenNhaXe(nhaXe.getTenNhaXe());
+        nhaXeResponse.setMoTaNgan(nhaXe.getMoTaNgan());
+        nhaXeResponse.setDiaChi(nhaXe.getDiaChi());
+        nhaXeResponse.setTaiKhoanId(nhaXe.getTaiKhoan().getId());
+        return nhaXeResponse;
+    }
+
     @Override
     public List<NhaXe> getAll() {
         List<NhaXe> listNhaXe = nhaXeRepository.findAll();
@@ -67,10 +83,26 @@ public class NhaXeServiceImpl implements NhaXeService {
     }
 
     @Override
+    public List<NhaXeResponse> getAllForUser() {
+        List<NhaXe> nhaXeList = nhaXeRepository.findNhaXesByTaiKhoanTrangThaiHoatDong_Active();
+        List<NhaXeResponse> nhaXeResponseList = new ArrayList<NhaXeResponse>();
+        for (NhaXe nhaXe : nhaXeList) {
+            nhaXeResponseList.add(convertNhaXeToNhaXeResponse(nhaXe));
+        }
+        return nhaXeResponseList;
+    }
+
+    @Override
     public NhaXe getNhaXeById(Long id) {
         NhaXe nhaXe = nhaXeRepository.findNhaXeById(id);
         if (nhaXe == null) return null;
         return nhaXe;
+    }
+
+    @Override
+    public NhaXeResponse getNhaXeByIdForUser(Long id) {
+        NhaXe nhaXe = nhaXeRepository.findNhaXeByIdAAndTaiKhoanTrangThaiHoatDong_Active(id);
+        return convertNhaXeToNhaXeResponse(nhaXe);
     }
 
     @Override

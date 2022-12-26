@@ -6,6 +6,7 @@ import com.example.datvexe.payloads.requests.LoaiXeRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
 import com.example.datvexe.services.LoaiXeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class LoaiXeController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public DataResponse addLoaiXe(@RequestBody LoaiXeRequest loaiXeRequest){
         if (loaiXeRequest == null) throw new CustomException("400","Missing request!!!");
         LoaiXe loaiXeNew = loaiXeService.addLoaiXe(loaiXeRequest);

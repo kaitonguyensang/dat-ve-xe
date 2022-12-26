@@ -39,6 +39,7 @@ public class AdminController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public DataResponse updateAdmin(@PathVariable("id") String id,@RequestBody AdminRequest adminRequest){
         if (adminRequest == null || id == null) throw new CustomException("400", "Missing field!!!");
         Long adminId = Long.valueOf(id);

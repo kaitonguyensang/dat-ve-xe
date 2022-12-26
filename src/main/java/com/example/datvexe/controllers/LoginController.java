@@ -6,7 +6,6 @@ import com.example.datvexe.payloads.requests.LoginRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
 import com.example.datvexe.payloads.responses.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
-public class LodaRestController {
+public class LoginController {
     @Autowired
     AuthenticationManager authenticationManager;
 
@@ -44,9 +43,4 @@ public class LodaRestController {
     }
 
     // Api /api/random yêu cầu phải xác thực mới có thể request
-    @GetMapping("/random")
-    public DataResponse randomStuff(){
-        return new DataResponse("1","JWT Hợp lệ mới có thể thấy được message này");
-    }
-
 }

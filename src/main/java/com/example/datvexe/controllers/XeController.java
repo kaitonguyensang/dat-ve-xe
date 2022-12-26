@@ -6,6 +6,7 @@ import com.example.datvexe.payloads.requests.XeRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
 import com.example.datvexe.services.XeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class XeController {
     XeService xeService;
 
     @GetMapping("/all")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public DataResponse getAll(){
         List<Xe> listXe = xeService.getAll();
         if (listXe.size()==0) throw  new CustomException("400", "Khong co xe nao!!!");
@@ -35,6 +37,7 @@ public class XeController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasAnyRole('ADMIN','NHAXE')")
     public DataResponse addXe(@RequestBody XeRequest xeRequest){
         if (xeRequest == null) throw new CustomException("400", "Missing field!!!");
         DataResponse dataResponse = xeService.addXe(xeRequest);

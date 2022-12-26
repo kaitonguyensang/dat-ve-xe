@@ -21,5 +21,7 @@ public interface TuyenXeRepository extends JpaRepository<TuyenXe, Long> {
     List<TuyenXe> findTuyenXeByBenXeDiLikeAndBenXeDenLikeAndNgayDiLike(BenXe benXeDi, BenXe benXeDen, LocalDate ngayDi);
 
     List<TuyenXe> findTuyenXeByBenXeDi_TinhThanhContainsAndBenXeDen_TinhThanhContains(String a,String b);
+
+    List<TuyenXe> findTuyenXeByBenXeDi_TinhThanhContainsAndBenXeDen_TinhThanhContainsAndAndNgayDiLike(String a,String b, LocalDate date);
 }
 

@@ -1,5 +1,6 @@
 package com.example.datvexe.services;
 
+import com.example.datvexe.models.TuyenXe;
 import com.example.datvexe.models.VeXe;
 import com.example.datvexe.payloads.requests.VeXeRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
@@ -11,5 +12,6 @@ import java.util.List;
 public interface VeXeService {
     List<VeXe> getAllVeXeByUserId(Long userId);
 
+    List<VeXe> getAllVeXeByTuyenXeId(Long tuyenXe);
     DataResponse addVeXe(VeXeRequest veXeRequest);
 }

@@ -7,6 +7,7 @@ import com.example.datvexe.payloads.requests.DanhGiaRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
 import com.example.datvexe.services.DanhGiaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class DanhGiaController {
     DanhGiaService danhGiaService;
 
     @PostMapping("/add")
+    @PreAuthorize("hasAnyRole('USER')")
     public DataResponse addDanhGia(@RequestBody DanhGiaRequest danhGiaRequest){
         if (danhGiaRequest == null) throw new CustomException("400", "Missing request!!!");
         DanhGia dataResponse = danhGiaService.addDanhGia(danhGiaRequest);
@@ -28,6 +30,7 @@ public class DanhGiaController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('USER')")
     public DataResponse getDanhGiaById(@PathVariable("id") String id){
         if (id ==null) throw  new CustomException("400", "Missing field!!!");
         Long danhGiaId = Long.valueOf(id);

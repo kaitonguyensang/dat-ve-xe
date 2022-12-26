@@ -6,6 +6,7 @@ import com.example.datvexe.payloads.requests.TaiKhoanRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
 import com.example.datvexe.services.impl.TaiKhoanServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class TaiKhoanController {
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public DataResponse getAllTaiKhoan(){
         List<TaiKhoan> listTaiKhoan = taiKhoanService.getAll();
         if (listTaiKhoan == null) return new DataResponse("404","Khong co tai khoan nao!!!");

@@ -6,6 +6,7 @@ import com.example.datvexe.payloads.requests.BenXeRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
 import com.example.datvexe.services.BenXeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class BenXeController {
     @Autowired
     BenXeService benXeService;
 
-    @GetMapping("/{id}")
+    @GetMapping("/benxeid/{id}")
     public DataResponse getBenXeById(@PathVariable("id") String id) {
         if (id == null) throw new CustomException("400", "Missing field");
         Long benXeId = Long.valueOf(id);
@@ -28,6 +29,7 @@ public class BenXeController {
     }
 
     @GetMapping("/all-admin")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public DataResponse getAllForAdmin() {
         List<BenXe> benXeList = benXeService.findAllBenXeForAdmin();
         if (benXeList.size() == 0) throw new CustomException("404", "Khong co ben xe!!!");
@@ -42,6 +44,7 @@ public class BenXeController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public DataResponse addNewBenXe(@RequestBody BenXeRequest benXeRequest) {
         if (benXeRequest == null) throw  new CustomException("400", "Missing field");
         BenXe newBenXe = benXeService.addNewBenXe(benXeRequest);
@@ -50,6 +53,7 @@ public class BenXeController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public DataResponse updateBenXe(@PathVariable("id") String id, @RequestBody BenXeRequest benXeRequest) {
         if (benXeRequest == null) throw  new CustomException("400", "Missing field");
         Long benXeId = Long.valueOf(id);
@@ -59,6 +63,7 @@ public class BenXeController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public DataResponse deleteBenXe(@PathVariable("id") String id) {
         Long benXeId = Long.valueOf(id);
         benXeId = benXeService.deleteBenXe(benXeId);

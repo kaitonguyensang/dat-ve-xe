@@ -6,6 +6,7 @@ import com.example.datvexe.payloads.requests.VeXeRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
 import com.example.datvexe.services.VeXeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +28,18 @@ public class VeXeController {
         return new DataResponse("200",vexe);
     }
 
+    @GetMapping("/tuyenxe-id/{id}")
+    public DataResponse getAllVexXeByTuyenXeId(@PathVariable("id") String id){
+        if(id == null) throw new CustomException("400","Missing field!!!!");
+        Long tuyenXeId = Long.valueOf(id);
+        List<VeXe> vexe = veXeService.getAllVeXeByTuyenXeId(tuyenXeId);
+        if (vexe == null) throw new CustomException("404", "Khong ton tai tuyen xe!!!");
+        if (vexe.size() == 0) return new DataResponse("200", "Chua dat ve!!!");
+        return new DataResponse("200",vexe);
+    }
+
     @PostMapping("/add")
+    @PreAuthorize("hasAnyRole('USER','NHAXE')")
     public DataResponse addVeXe(@RequestBody VeXeRequest veXeRequest){
         if (veXeRequest == null) throw new CustomException("400","Missing field!!!");
         DataResponse dataResponse = veXeService.addVeXe(veXeRequest);
