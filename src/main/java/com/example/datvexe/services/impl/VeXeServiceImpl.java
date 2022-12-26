@@ -49,13 +49,15 @@ public class VeXeServiceImpl implements VeXeService {
     public DataResponse addVeXe(VeXeRequest veXeRequest) {
         TuyenXe tuyenXe = tuyenXeRepository.findOneById(veXeRequest.getTuyenXeId());
         if (tuyenXe == null) return new DataResponse("1","/");
+        User user = userRepository.findUserById(veXeRequest.getUserId());
+        if (user == null) return new DataResponse("2","/");
         VeXe veXeCheck = veRepository.findVeXeByTuyenXe_IdAndSoGhe(tuyenXe.getId(), veXeRequest.getSoGhe());
-        if (veXeCheck != null) return new DataResponse("2","/");
+        if (veXeCheck != null) return new DataResponse("3","/");
         veXeRequest.setTrangThai(TrangThai.INACTIVE);
         VeXe veXeNew = new VeXe();
         veXeNew = convertVeXeRequestToVeXe(veXeRequest,veXeNew);
-        if (veXeNew == null) return new DataResponse("3","/");
+        if (veXeNew == null) return new DataResponse("4","/");
         veXeNew = veRepository.save(veXeNew);
-        return new DataResponse("4", veXeNew);
+        return new DataResponse("5", veXeNew);
     }
 }

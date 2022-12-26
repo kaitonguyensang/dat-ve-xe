@@ -17,6 +17,6 @@ public class VeXeRequest {
     private LocalDate ngayNhan;
     private HinhThucThanhToan hinhThucThanhToan;
     private Long tuyenXeId;
-    private Long UserId;
+    private Long userId;
     private TrangThai trangThai;
 }

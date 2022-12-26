@@ -32,9 +32,10 @@ public class VeXeController {
         if (veXeRequest == null) throw new CustomException("400","Missing field!!!");
         DataResponse dataResponse = veXeService.addVeXe(veXeRequest);
         if (dataResponse.getStatus()=="1") throw new CustomException("400", "Khong ton tai tuyen xe!!!");
-        if (dataResponse.getStatus()=="2") throw new CustomException("400", "Ghe da duoc dat!!!");
-        if (dataResponse.getStatus()=="3") throw new CustomException("400", "Dang ky khong thanh cong!!!");
-        if (dataResponse.getStatus()=="4") return new DataResponse("200", dataResponse.getObject());
+        if (dataResponse.getStatus()=="2") throw new CustomException("400", "Khong ton tai user!!!");
+        if (dataResponse.getStatus()=="3") throw new CustomException("400", "Ghe da duoc dat!!!");
+        if (dataResponse.getStatus()=="4") throw new CustomException("400", "Dang ky khong thanh cong!!!");
+        if (dataResponse.getStatus()=="5") return new DataResponse("200", dataResponse.getObject());
         return new DataResponse("200", dataResponse.getObject());
     }
 }
