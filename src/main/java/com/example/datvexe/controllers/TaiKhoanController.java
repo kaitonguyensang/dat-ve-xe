@@ -4,7 +4,7 @@ import com.example.datvexe.handler.CustomException;
 import com.example.datvexe.models.TaiKhoan;
 import com.example.datvexe.payloads.requests.TaiKhoanRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
-import com.example.datvexe.services.TaiKhoanService;
+import com.example.datvexe.services.impl.TaiKhoanServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +16,7 @@ import java.util.List;
 public class TaiKhoanController {
 
     @Autowired
-    TaiKhoanService taiKhoanService;
+    TaiKhoanServiceImpl taiKhoanService;
 
     @GetMapping("/{id}")
     public DataResponse getTaiKhoanById(@PathVariable("id") String id) {

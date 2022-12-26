@@ -50,7 +50,7 @@ public class TuyenXeController {
         return new DataResponse("200",tuyenXeList);
     }
 
-    @GetMapping("find-by-address")
+    @PostMapping("find-by-address")
     public DataResponse findByAddress(@RequestBody TuyenXeRequestByAddress request){
         if (request == null) throw new CustomException("400","Missing request!!!");
         List<TuyenXe> tuyenXeList =tuyenXeService.getTuyenXeByBenXeDiBenXeDen(request);

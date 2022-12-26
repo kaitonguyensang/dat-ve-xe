@@ -12,6 +12,7 @@ import com.example.datvexe.repositories.TaiKhoanRepository;
 import com.example.datvexe.repositories.UserRepository;
 import com.example.datvexe.services.SignUpService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,6 +29,9 @@ public class SignUpServiceImpl implements SignUpService {
 
     @Autowired
     NhaXeRepository nhaXeRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     public TaiKhoan convertSignUpToTaiKhoan(SignUpRequest signUpRequest){
         TaiKhoan taiKhoan = new TaiKhoan();
@@ -101,6 +105,8 @@ public class SignUpServiceImpl implements SignUpService {
         if (check!=5) return check;
 
         TaiKhoan taiKhoanNew= convertSignUpToTaiKhoan(signUpRequest);
+        String password = passwordEncoder.encode(signUpRequest.getPassword());
+        taiKhoanNew.setPassword(password);
         TaiKhoan taiKhoanAdd = taiKhoanRepository.save(taiKhoanNew);
         TaiKhoan taiKhoanOfUsername = new TaiKhoan();
         if(taiKhoanAdd != null)  {
@@ -120,6 +126,8 @@ public class SignUpServiceImpl implements SignUpService {
         NhaXe nhaXe = nhaXeRepository.findNhaXeByTenNhaXe(signUpRequest.getTenNhaXe());
         if (nhaXe != null) return 6;
         TaiKhoan taiKhoanNew= convertSignUpToTaiKhoan(signUpRequest);
+        String password = passwordEncoder.encode(signUpRequest.getPassword());
+        taiKhoanNew.setPassword(password);
         TaiKhoan taiKhoanAdd = taiKhoanRepository.save(taiKhoanNew);
         NhaXe nhaXeNew = convertSignUpToNhaXe(signUpRequest,taiKhoanAdd);
         nhaXeRepository.save(nhaXeNew);
@@ -131,6 +139,8 @@ public class SignUpServiceImpl implements SignUpService {
         if (check != 5) return check;
 
         TaiKhoan taiKhoanNew = convertSignUpToTaiKhoan(signUpRequest);
+        String password = passwordEncoder.encode(signUpRequest.getPassword());
+        taiKhoanNew.setPassword(password);
         TaiKhoan taiKhoanAdd = taiKhoanRepository.save(taiKhoanNew);
         TaiKhoan taiKhoanOfAdmin = new TaiKhoan();
         if (taiKhoanAdd != null) {

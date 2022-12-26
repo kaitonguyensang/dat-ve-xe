@@ -21,7 +21,7 @@ public class AdminController {
     AdminService adminService;
 
     @GetMapping("/all")
-//    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public DataResponse getAll(){
         List<Admin> listAdmin = adminService.getAll();
         if (listAdmin==null) throw new CustomException("404","Khong co Admin nao ca!!!");
@@ -29,6 +29,7 @@ public class AdminController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public DataResponse getById(@PathVariable("id") String id){
         if (id==null) throw new CustomException("400", "Missing field!!!");
         Long adminId = Long.valueOf(id);
