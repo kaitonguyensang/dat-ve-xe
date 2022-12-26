@@ -2,6 +2,7 @@ package com.example.datvexe.models;
 import com.example.datvexe.common.TrangThai;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -40,11 +41,11 @@ public class TuyenXe {
 
     @ManyToOne
     @JoinColumn(name = "benxedi_id", referencedColumnName = "id")
-    @JsonIgnore
+    @JsonManagedReference
     private BenXe benXeDi;
     @ManyToOne
     @JoinColumn(name = "benxeden_id", referencedColumnName = "id")
-    @JsonIgnore
+    @JsonManagedReference
     private BenXe benXeDen;
 
     @OneToMany(mappedBy="tuyenXe")
@@ -52,12 +53,12 @@ public class TuyenXe {
     private List<VeXe> veXe;
 
     @OneToMany(mappedBy="tuyenXe")
-    @JsonIgnore
+    @JsonBackReference
     private List<HangHoa> hangHoa;
 
     @ManyToOne
     @JoinColumn(name = "xe_id", referencedColumnName = "id")
-    @JsonIgnore
+    @JsonManagedReference
     private Xe xe;
 
 }

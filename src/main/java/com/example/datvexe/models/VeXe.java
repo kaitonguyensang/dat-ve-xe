@@ -4,6 +4,7 @@ import com.example.datvexe.common.HinhThucThanhToan;
 import com.example.datvexe.common.TrangThai;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,12 +33,12 @@ public class VeXe {
 
     @ManyToOne
     @JoinColumn(name = "tuyenxe_id",referencedColumnName = "id")
-    @JsonIgnore
+    @JsonManagedReference
     private TuyenXe tuyenXe;
 
     @ManyToOne
     @JoinColumn(name = "user_id",referencedColumnName = "id")
-    @JsonIgnore
+    @JsonManagedReference
     private User user;
 
     @Column(name = "trangthaihoatdong")

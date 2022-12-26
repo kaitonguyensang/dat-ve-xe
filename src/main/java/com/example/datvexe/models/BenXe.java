@@ -1,6 +1,7 @@
 package com.example.datvexe.models;
 
 import com.example.datvexe.common.TrangThai;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,10 +34,10 @@ public class BenXe {
     private TrangThai trangThai;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,mappedBy ="benXeDi")
-    @JsonIgnore
+    @JsonBackReference
     private List<TuyenXe> tuyenXeDi;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,mappedBy ="benXeDen")
-    @JsonIgnore
+    @JsonBackReference
     private List<TuyenXe> tuyenXeDen;
 }

@@ -19,7 +19,7 @@ public class DanhGia {
     private Long id;
 
     @Column(name = "sosao")
-    private String soSao;
+    private int soSao;
 
     @Column(name = "noidung")
     private String noiDung;
