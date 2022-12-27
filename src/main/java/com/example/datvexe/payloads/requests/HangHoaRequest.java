@@ -10,10 +10,11 @@ import lombok.Setter;
 @Data
 public class HangHoaRequest {
     private Long canNang;
-    private int gia;
     private String tenNguoiNhan;
     private String sdtNguoiNhan;
+    private int gia;
     private String email;
     private Long tuyenXeId;
-    private Long useId;
+    private Long userId;
+    private TrangThai trangThai;
 }

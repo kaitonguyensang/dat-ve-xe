@@ -4,6 +4,7 @@ import com.example.datvexe.models.TuyenXe;
 import com.example.datvexe.payloads.requests.TuyenXeRequest;
 import com.example.datvexe.payloads.requests.TuyenXeRequestByAddress;
 import com.example.datvexe.payloads.requests.TuyenXeRequestByAddressDate;
+import com.example.datvexe.payloads.responses.TuyenXeChiTietResponse;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

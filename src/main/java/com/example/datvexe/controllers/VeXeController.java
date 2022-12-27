@@ -1,6 +1,7 @@
 package com.example.datvexe.controllers;
 
 import com.example.datvexe.handler.CustomException;
+import com.example.datvexe.models.HangHoa;
 import com.example.datvexe.models.VeXe;
 import com.example.datvexe.payloads.requests.VeXeRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
@@ -29,6 +30,7 @@ public class VeXeController {
     }
 
     @GetMapping("/tuyenxe-id/{id}")
+    @PreAuthorize("hasAnyRole('NHAXE','ADMIN')")
     public DataResponse getAllVexXeByTuyenXeId(@PathVariable("id") String id){
         if(id == null) throw new CustomException("400","Missing field!!!!");
         Long tuyenXeId = Long.valueOf(id);
@@ -49,5 +51,15 @@ public class VeXeController {
         if (dataResponse.getStatus()=="4") throw new CustomException("400", "Dang ky khong thanh cong!!!");
         if (dataResponse.getStatus()=="5") return new DataResponse("200", dataResponse.getObject());
         return new DataResponse("200", dataResponse.getObject());
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('NHAXE')")
+    public DataResponse updateVeXe(@PathVariable("id") String id,@RequestBody VeXeRequest veXeRequest){
+        if(veXeRequest == null || id==null)  throw  new CustomException("400","Missing field!!!");
+        Long veXeId = Long.valueOf(id);
+        VeXe veXe= veXeService.updateVeXe(veXeRequest,veXeId);
+        if (veXe == null) throw new CustomException("404","Thay doi thong tin ve xe that bai!!!");
+        return new DataResponse("200",veXe);
     }
 }

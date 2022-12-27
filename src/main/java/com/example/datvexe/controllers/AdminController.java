@@ -20,7 +20,7 @@ public class AdminController {
     AdminService adminService;
 
     @GetMapping("/all")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public DataResponse getAll(){
         List<Admin> listAdmin = adminService.getAll();
         if (listAdmin==null) throw new CustomException("404","Khong co Admin nao ca!!!");

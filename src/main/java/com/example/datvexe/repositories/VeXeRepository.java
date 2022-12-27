@@ -15,4 +15,5 @@ public interface VeXeRepository extends JpaRepository<VeXe, Long> {
     VeXe findVeXeByTuyenXe_IdAndSoGhe(Long tuyenXeId, int soGhe);
 
     List<VeXe> findVeXeByTuyenXe(TuyenXe tuyenXe);
+    VeXe findVeXeById(Long veXeId);
 }

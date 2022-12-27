@@ -1,5 +1,6 @@
 package com.example.datvexe.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,12 +22,12 @@ public class Xe {
 
     @ManyToOne
     @JoinColumn(name = "nhaxe_id",referencedColumnName = "id")
-    @JsonIgnore
+    @JsonManagedReference
     private NhaXe nhaXe;
 
     @ManyToOne
     @JoinColumn(name = "loaixe_id",referencedColumnName = "id")
-    @JsonIgnore
+    @JsonManagedReference
     private LoaiXe loaiXe;
 
     @OneToMany(mappedBy="xe")

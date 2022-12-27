@@ -15,14 +15,16 @@ import java.time.LocalTime;
 @Setter
 @ResponseBody
 public class TuyenXeChiTietResponse {
-    private Long id;
+    private Long id;//
     private String tenBenXeDi;
     private String tenBenXeDen;
     private String tenNhaXe;
     private String tenLoaiXe;
-    private LocalTime gioKhoiHanh;
-    private LocalDate ngayDi;
-    private String thoiGianHanhTrinh;
-    private Integer giaVe;
-    private TrangThai trangThai;
+    private LocalDate ngayDi;//
+    private LocalTime gioDi;//
+    private String thoiGianHanhTrinh;//
+    private Integer giaVe;//
+    private TrangThai trangThai;//
+    private int sucChua;
+    private String sdt;
 }

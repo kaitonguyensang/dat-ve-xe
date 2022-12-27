@@ -1,10 +1,7 @@
 package com.example.datvexe.services.impl;
 
 import com.example.datvexe.common.TrangThai;
-import com.example.datvexe.models.NhaXe;
-import com.example.datvexe.models.TuyenXe;
-import com.example.datvexe.models.User;
-import com.example.datvexe.models.VeXe;
+import com.example.datvexe.models.*;
 import com.example.datvexe.payloads.requests.VeXeRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
 import com.example.datvexe.repositories.TuyenXeRepository;
@@ -47,6 +44,13 @@ public class VeXeServiceImpl implements VeXeService {
         return veXeList;
     }
 
+    private VeXe convertVeXeRequestUpdateToVeXe(VeXeRequest veXeRequest, VeXe veXe){
+        veXe.setSoGhe(veXeRequest.getSoGhe());
+        veXe.setHinhThucThanhToan(veXeRequest.getHinhThucThanhToan());
+        veXe.setNgayNhan(veXeRequest.getNgayNhan());
+        return veXe;
+    }
+
     @Override
     public List<VeXe> getAllVeXeByTuyenXeId(Long tuyenXeId) {
         TuyenXe tuyenXe = tuyenXeRepository.findOneById(tuyenXeId);
@@ -71,5 +75,14 @@ public class VeXeServiceImpl implements VeXeService {
         if (veXeNew == null) return new DataResponse("4","/");
         veXeNew = veRepository.save(veXeNew);
         return new DataResponse("5", veXeNew);
+    }
+
+    @Override
+    public VeXe updateVeXe(VeXeRequest veXeRequest, Long veXeId) {
+        VeXe veXeCheck = veRepository.findVeXeById(veXeId);
+        if (veXeCheck==null) return null;
+        VeXe veXeAdd = convertVeXeRequestUpdateToVeXe(veXeRequest, veXeCheck);
+        VeXe veXeNew = veRepository.save(veXeAdd);
+        return veXeNew;
     }
 }

@@ -7,6 +7,7 @@ import com.example.datvexe.payloads.requests.TuyenXeRequest;
 import com.example.datvexe.payloads.requests.TuyenXeRequestByAddress;
 import com.example.datvexe.payloads.requests.TuyenXeRequestByAddressDate;
 import com.example.datvexe.payloads.responses.DataResponse;
+import com.example.datvexe.payloads.responses.TuyenXeChiTietResponse;
 import com.example.datvexe.repositories.XeRepository;
 import com.example.datvexe.services.TuyenXeService;
 import org.springframework.beans.factory.annotation.Autowired;
