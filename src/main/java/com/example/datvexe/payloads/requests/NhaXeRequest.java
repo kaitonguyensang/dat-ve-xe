@@ -13,11 +13,8 @@ import javax.persistence.Enumerated;
 @Setter
 @Data
 public class NhaXeRequest {
-    private Long id;
     private String tenNhaXe;
     private String sdt;
-    private String username;
-    private String password;
     private String moTaNgan;
     private String diaChi;
     @Enumerated(EnumType.STRING)

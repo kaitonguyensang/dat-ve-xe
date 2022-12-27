@@ -4,6 +4,8 @@ import com.example.datvexe.handler.CustomException;
 import com.example.datvexe.models.Admin;
 import com.example.datvexe.models.NhaXe;
 import com.example.datvexe.models.User;
+import com.example.datvexe.payloads.requests.AdminRequest;
+import com.example.datvexe.payloads.requests.UserRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
 import com.example.datvexe.services.AdminService;
 import com.example.datvexe.services.UserService;
@@ -36,6 +38,22 @@ public class UserController {
         User user = userService.getUserById(userId);
         if (user==null) throw new CustomException("404", "Khong ton tai admin nhu yeu cau!!!");
         return new DataResponse("200",user);
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    public DataResponse updateAdmin(@PathVariable("id") String id,@RequestBody UserRequest userRequest){
+        if (userRequest == null || id == null) throw new CustomException("400", "Missing field!!!");
+        Long userId = Long.valueOf(id);
+        DataResponse dataResponse = userService.updateUser(userRequest,userId);
+        //
+        if (dataResponse.getStatus().equals("1")) throw new CustomException("404", "Khong ton tai nguoi dung!!!");
+        if (dataResponse.getStatus().equals("2")) throw new CustomException("404", "Khong ton tai tai khoan!!!");
+        if (dataResponse.getStatus().equals("3")) throw new CustomException("404", "So dien thoai da ton tai!!!");
+        if (dataResponse.getStatus().equals("4")) throw new CustomException("404", "Ten nha xe da ton tai!!!");
+        if (dataResponse.getStatus().equals("5")) throw new CustomException("404", "Email da ton tai!!!");
+        if (dataResponse.getStatus().equals("6")) throw new CustomException("404", "CMND da ton tai!!!");
+        return dataResponse;
     }
 
 

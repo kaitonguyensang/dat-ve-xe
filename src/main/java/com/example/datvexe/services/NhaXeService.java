@@ -15,5 +15,5 @@ public interface NhaXeService {
     NhaXe getNhaXeById(Long id);
 
     NhaXeResponse getNhaXeByIdForUser(Long id);
-    DataResponse updateNhaXe(NhaXeRequest nhaXeRequest);
+    DataResponse updateNhaXe(NhaXeRequest nhaXeRequest, Long nhaXeId);
 }

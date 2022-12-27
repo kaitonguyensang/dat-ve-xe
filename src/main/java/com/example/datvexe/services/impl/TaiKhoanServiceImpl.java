@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,13 +19,6 @@ public class TaiKhoanServiceImpl implements UserDetailsService {
     @Autowired
     TaiKhoanRepository taiKhoanRepository;
 
-    public TaiKhoan convertTaiKhoanRequestToTaiKhoan(TaiKhoanRequest taiKhoanRequest, TaiKhoan taiKhoan){
-        taiKhoan.setUsername(taiKhoanRequest.getUsername());
-        taiKhoan.setPassword(taiKhoanRequest.getPassword());
-        taiKhoan.setTrangThaiHoatDong(taiKhoanRequest.getTrangThaiHoatDong());
-        taiKhoan.setRole(taiKhoanRequest.getRole());
-        return taiKhoan;
-    }
 
     public TaiKhoan getTaiKhoanById(Long id){
         TaiKhoan taiKhoan = taiKhoanRepository.findTaiKhoanById(id);
@@ -38,12 +32,14 @@ public class TaiKhoanServiceImpl implements UserDetailsService {
         return listTaiKhoan;
     }
 
-    public TaiKhoan updateTaiKhoan(TaiKhoanRequest taiKhoanRequest){
-        TaiKhoan taiKhoanCheck = taiKhoanRepository.findTaiKhoanById(taiKhoanRequest.getId());
+    public TaiKhoan updateTaiKhoan(TaiKhoanRequest taiKhoanRequest, Long id){
+        TaiKhoan taiKhoanCheck = taiKhoanRepository.findTaiKhoanById(id);
         if(taiKhoanCheck == null) return null;
-        TaiKhoan taiKhoanUpdate = convertTaiKhoanRequestToTaiKhoan(taiKhoanRequest, taiKhoanCheck);
-        taiKhoanUpdate = taiKhoanRepository.save(taiKhoanUpdate);
-        return taiKhoanUpdate;
+//        String passWordEncoded = commonService.changePasswordToPasswordEncode(taiKhoanRequest.getPassword());
+//        String passWordEncoded = taiKhoanRequest.getPassword();
+        taiKhoanCheck.setPassword(taiKhoanRequest.getPassword());
+        taiKhoanCheck = taiKhoanRepository.save(taiKhoanCheck);
+        return taiKhoanCheck;
     }
 
     @Override

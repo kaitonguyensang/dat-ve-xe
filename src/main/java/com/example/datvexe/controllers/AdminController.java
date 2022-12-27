@@ -42,8 +42,7 @@ public class AdminController {
     public DataResponse updateAdmin(@PathVariable("id") String id,@RequestBody AdminRequest adminRequest){
         if (adminRequest == null || id == null) throw new CustomException("400", "Missing field!!!");
         Long adminId = Long.valueOf(id);
-        adminRequest.setId(adminId);
-        DataResponse dataResponse = adminService.updateAdmin(adminRequest);
+        DataResponse dataResponse = adminService.updateAdmin(adminRequest,adminId);
         if (dataResponse.getStatus().equals("1")) throw new CustomException("404", "Khong ton tai admin!!!");
         if (dataResponse.getStatus().equals("2")) throw new CustomException("404", "Khong ton tai tai khoan!!!");
         if (dataResponse.getStatus().equals("3")) throw new CustomException("404", "So dien thoai da ton tai!!!");

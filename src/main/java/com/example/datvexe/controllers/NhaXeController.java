@@ -59,8 +59,7 @@ public class NhaXeController {
     public DataResponse updateNhaXe(@PathVariable("id") String id,@RequestBody NhaXeRequest nhaXeRequest){
         if (nhaXeRequest == null || id == null) throw new CustomException("400", "Missing field!!!");
         Long nhaXeId = Long.valueOf(id);
-        nhaXeRequest.setId(nhaXeId);
-        DataResponse dataResponse = nhaXeService.updateNhaXe(nhaXeRequest);
+        DataResponse dataResponse = nhaXeService.updateNhaXe(nhaXeRequest,nhaXeId);
         if (dataResponse.getStatus().equals("1")) throw new CustomException("404", "Khong ton tai nha xe!!!");
         if (dataResponse.getStatus().equals("2")) throw new CustomException("404", "Khong ton tai tai khoan!!!");
         if (dataResponse.getStatus().equals("3")) throw new CustomException("404", "So dien thoai da ton tai!!!");

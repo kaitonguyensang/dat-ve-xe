@@ -1,5 +1,6 @@
 package com.example.datvexe.services.impl;
 
+import com.example.datvexe.common.TrangThai;
 import com.example.datvexe.models.Admin;
 import com.example.datvexe.models.TaiKhoan;
 import com.example.datvexe.payloads.requests.AdminRequest;
@@ -25,12 +26,11 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     CommonServiceImpl commonService;
 
-    public TaiKhoan convertAdminRequestToTaiKhoan(AdminRequest adminRequest){
-        TaiKhoan taiKhoan = taiKhoanRepository.findTaiKhoanByAdmin_Id(adminRequest.getId());
+    public TaiKhoan convertAdminRequestToTaiKhoan(AdminRequest adminRequest, Long adminId){
+        TaiKhoan taiKhoan = taiKhoanRepository.findTaiKhoanByAdmin_Id(adminId);
         if (taiKhoan == null) return null;
-        taiKhoan.setUsername(adminRequest.getUsername());
-        taiKhoan.setPassword(adminRequest.getPassword());
         taiKhoan.setRole(adminRequest.getRole());
+        if (adminRequest.getTrangThaiHoatDong()==null) adminRequest.setTrangThaiHoatDong(TrangThai.ACTIVE);
         taiKhoan.setTrangThaiHoatDong(adminRequest.getTrangThaiHoatDong());
         return taiKhoan;
     }
@@ -39,6 +39,7 @@ public class AdminServiceImpl implements AdminService {
         admin.setName(adminRequest.getName());
         admin.setSdt(adminRequest.getSdt());
         admin.setCmnd(adminRequest.getCmnd());
+        admin.setEmail(adminRequest.getEmail());
         admin.setTaiKhoan(taiKhoan);
         return admin;
     }
@@ -49,8 +50,6 @@ public class AdminServiceImpl implements AdminService {
         signUpRequest.setCmnd(adminRequest.getCmnd());
         signUpRequest.setSdt(adminRequest.getSdt());
         signUpRequest.setEmail(adminRequest.getEmail());
-        signUpRequest.setUsername(adminRequest.getUsername());
-        signUpRequest.setPassword(adminRequest.getPassword());
         signUpRequest.setTrangThaiHoatDong(adminRequest.getTrangThaiHoatDong());
         signUpRequest.setRole(adminRequest.getRole());
         return signUpRequest;
@@ -63,10 +62,10 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public DataResponse updateAdmin(AdminRequest adminRequest) {
-        Admin admin = adminRepository.findAdminById(adminRequest.getId());
+    public DataResponse updateAdmin(AdminRequest adminRequest, Long adminId) {
+        Admin admin = adminRepository.findAdminById(adminId);
         if (admin == null) return new DataResponse("1","/");
-        TaiKhoan taiKhoanNew = convertAdminRequestToTaiKhoan(adminRequest);
+        TaiKhoan taiKhoanNew = convertAdminRequestToTaiKhoan(adminRequest, adminId);
         if (taiKhoanNew == null) return new DataResponse("2","/");
         Admin adminNew = convertAdminRequestToAdmin(adminRequest, admin, taiKhoanNew);
         int check = commonService.checkInForUpdateAccount(convertAdminRequestToSignUpRequest(adminRequest),taiKhoanNew);

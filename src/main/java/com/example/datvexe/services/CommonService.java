@@ -7,4 +7,6 @@ import org.springframework.stereotype.Component;
 @Component
 public interface CommonService {
     int checkInForUpdateAccount(SignUpRequest signUpRequest, TaiKhoan taiKhoan);
+
+    String changePasswordToPasswordEncode(String password);
 }

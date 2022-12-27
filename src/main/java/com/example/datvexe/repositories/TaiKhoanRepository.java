@@ -23,4 +23,6 @@ public interface TaiKhoanRepository extends JpaRepository<TaiKhoan, Long> {
     TaiKhoan findTaiKhoanByNhaXe_TenNhaXe(String tenNhaXe);
 
     TaiKhoan findTaiKhoanByNhaXe_Id(Long id);
+
+    TaiKhoan findTaiKhoanByUser_Id(Long userId);
 }

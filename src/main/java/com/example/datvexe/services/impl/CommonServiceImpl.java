@@ -9,6 +9,7 @@ import com.example.datvexe.repositories.TaiKhoanRepository;
 import com.example.datvexe.repositories.UserRepository;
 import com.example.datvexe.services.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -26,6 +27,9 @@ public class CommonServiceImpl implements CommonService {
 
     @Autowired
     AdminRepository adminRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     public int checkInForUpdateAccount(SignUpRequest signUpRequest, TaiKhoan taiKhoan){
         TaiKhoan taiKhoanCheck = taiKhoanRepository.findTaiKhoanByAdmin_Sdt(signUpRequest.getSdt());
@@ -48,5 +52,10 @@ public class CommonServiceImpl implements CommonService {
         taiKhoanCheck = taiKhoanRepository.findTaiKhoanByAdmin_Cmnd(signUpRequest.getCmnd());
         if(taiKhoanCheck != taiKhoan && taiKhoanCheck != null) return 4;
         return 5;
+    }
+
+    @Override
+    public String changePasswordToPasswordEncode(String password) {
+        return passwordEncoder.encode(password);
     }
 }

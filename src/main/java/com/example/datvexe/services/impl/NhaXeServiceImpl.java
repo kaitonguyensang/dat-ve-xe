@@ -32,12 +32,9 @@ public class NhaXeServiceImpl implements NhaXeService {
     @Autowired
     TaiKhoanRepository taiKhoanRepository;
 
-    public TaiKhoan convertNhaXeRequestToTaiKhoan(NhaXeRequest nhaXeRequest){
-        TaiKhoan taiKhoan = taiKhoanRepository.findTaiKhoanByNhaXe_Id(nhaXeRequest.getId());
+    public TaiKhoan convertNhaXeRequestToTaiKhoan(NhaXeRequest nhaXeRequest, Long nhaXeId){
+        TaiKhoan taiKhoan = taiKhoanRepository.findTaiKhoanByNhaXe_Id(nhaXeId);
         if (taiKhoan == null) return null;
-        taiKhoan.setUsername(nhaXeRequest.getUsername());
-        taiKhoan.setPassword(nhaXeRequest.getPassword());
-        taiKhoan.setRole(nhaXeRequest.getRole());
         if (nhaXeRequest.getTrangThaiHoatDong()==null) nhaXeRequest.setTrangThaiHoatDong(TrangThai.ACTIVE);
         taiKhoan.setTrangThaiHoatDong(nhaXeRequest.getTrangThaiHoatDong());
         return taiKhoan;
@@ -48,6 +45,7 @@ public class NhaXeServiceImpl implements NhaXeService {
         nhaXe.setSdt(nhaXeRequest.getSdt());
         nhaXe.setMoTaNgan(nhaXeRequest.getMoTaNgan());
         nhaXe.setDiaChi(nhaXeRequest.getDiaChi());
+        nhaXe.setTaiKhoan(taiKhoan);
         return nhaXe;
     }
 
@@ -57,8 +55,6 @@ public class NhaXeServiceImpl implements NhaXeService {
         signUpRequest.setMoTaNgan(nhaXeRequest.getMoTaNgan());
         signUpRequest.setDiaChi(nhaXeRequest.getDiaChi());
         signUpRequest.setTenNhaXe(nhaXeRequest.getTenNhaXe());
-        signUpRequest.setUsername(nhaXeRequest.getUsername());
-        signUpRequest.setPassword(nhaXeRequest.getPassword());
         signUpRequest.setTrangThaiHoatDong(nhaXeRequest.getTrangThaiHoatDong());
         signUpRequest.setRole(nhaXeRequest.getRole());
         return signUpRequest;
@@ -106,10 +102,10 @@ public class NhaXeServiceImpl implements NhaXeService {
     }
 
     @Override
-    public DataResponse updateNhaXe(NhaXeRequest nhaXeRequest) {
-        NhaXe nhaXe = nhaXeRepository.findNhaXeById(nhaXeRequest.getId());
+    public DataResponse updateNhaXe(NhaXeRequest nhaXeRequest, Long nhaXeId) {
+        NhaXe nhaXe = nhaXeRepository.findNhaXeById(nhaXeId);
         if (nhaXe == null) return new DataResponse("1","/");
-        TaiKhoan taiKhoanNew = convertNhaXeRequestToTaiKhoan(nhaXeRequest);
+        TaiKhoan taiKhoanNew = convertNhaXeRequestToTaiKhoan(nhaXeRequest, nhaXeId);
         if (taiKhoanNew == null) return new DataResponse("2","/");
         NhaXe nhaXeNew = convertNhaXeRequestToNhaXe(nhaXeRequest, nhaXe, taiKhoanNew);
         int check = commonService.checkInForUpdateAccount(convertNhaXeRequestToSignUpRequest(nhaXeRequest),taiKhoanNew);

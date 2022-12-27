@@ -13,12 +13,5 @@ import javax.persistence.Enumerated;
 @Getter
 @Setter
 public class TaiKhoanRequest {
-    @Enumerated(EnumType.STRING)
-    private Role role;
-
-    private Long id;
-    private String username;
     private String password;
-    @Enumerated(EnumType.STRING)
-    private TrangThai trangThaiHoatDong;
 }

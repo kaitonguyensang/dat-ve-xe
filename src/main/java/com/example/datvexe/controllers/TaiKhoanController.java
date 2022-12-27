@@ -7,6 +7,7 @@ import com.example.datvexe.payloads.responses.DataResponse;
 import com.example.datvexe.services.impl.TaiKhoanServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,9 @@ public class TaiKhoanController {
 
     @Autowired
     TaiKhoanServiceImpl taiKhoanService;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @GetMapping("/{id}")
     public DataResponse getTaiKhoanById(@PathVariable("id") String id) {
@@ -37,9 +41,12 @@ public class TaiKhoanController {
     }
 
     @PutMapping("{id}")
-    public DataResponse updateTaiKhoan(@RequestBody TaiKhoanRequest taiKhoanRequest){
-        if (taiKhoanRequest == null) throw new CustomException("400","Missing field!!!");
-        TaiKhoan taiKhoanupdate =  taiKhoanService.updateTaiKhoan(taiKhoanRequest);
+    public DataResponse updateTaiKhoan(@PathVariable("id") String id, @RequestBody TaiKhoanRequest taiKhoanRequest){
+        if (taiKhoanRequest == null || id == null) throw new CustomException("400","Missing field!!!");
+        Long taiKhoanId = Long.valueOf(id);
+        String password = passwordEncoder.encode(taiKhoanRequest.getPassword());
+        taiKhoanRequest.setPassword(password);
+        TaiKhoan taiKhoanupdate =  taiKhoanService.updateTaiKhoan(taiKhoanRequest,taiKhoanId);
         if (taiKhoanupdate == null) throw new CustomException("404", "Tai khoan khong ton tai!!!");
         return new DataResponse("200",taiKhoanupdate);
     }

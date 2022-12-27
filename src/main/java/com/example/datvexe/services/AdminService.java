@@ -11,6 +11,6 @@ import java.util.List;
 @Component
 public interface AdminService {
     List<Admin> getAll();
-    DataResponse updateAdmin(AdminRequest adminRequest);
+    DataResponse updateAdmin(AdminRequest adminRequest, Long id);
     Admin getAdminById(Long id);
 }
