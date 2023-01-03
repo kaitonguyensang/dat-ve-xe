@@ -41,10 +41,11 @@ public class VeXe {
     @JsonManagedReference
     private User user;
 
-    @Column(name = "trangthaihoatdong")
+    @Column(name = "hinhthucthanhtoan")
     @Enumerated(EnumType.STRING)
     private HinhThucThanhToan hinhThucThanhToan;
 
     @Column(name = "xacthuc")
+    @Enumerated(EnumType.STRING)
     private TrangThai trangThai;
 }

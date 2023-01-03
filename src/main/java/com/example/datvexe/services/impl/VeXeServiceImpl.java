@@ -26,8 +26,8 @@ public class VeXeServiceImpl implements VeXeService {
     @Autowired
     TuyenXeRepository tuyenXeRepository;
 
-    public VeXe convertVeXeRequestToVeXe(VeXeRequest veXeRequest, VeXe veXe) {
-        veXe.setSoGhe(veXeRequest.getSoGhe());
+    public VeXe convertVeXeRequestToVeXe(VeXeRequest veXeRequest, VeXe veXe, int soGhe) {
+        veXe.setSoGhe(soGhe);
         veXe.setNgayDat(veXeRequest.getNgayDat());
         veXe.setNgayNhan(veXeRequest.getNgayNhan());
         veXe.setHinhThucThanhToan(veXeRequest.getHinhThucThanhToan());
@@ -44,9 +44,10 @@ public class VeXeServiceImpl implements VeXeService {
         return veXeList;
     }
 
-    private VeXe convertVeXeRequestUpdateToVeXe(VeXeRequest veXeRequest, VeXe veXe){
-        veXe.setSoGhe(veXeRequest.getSoGhe());
+    private VeXe convertVeXeRequestUpdateToVeXe(VeXeRequest veXeRequest, VeXe veXe, int soGhe){
+        veXe.setSoGhe(soGhe);
         veXe.setHinhThucThanhToan(veXeRequest.getHinhThucThanhToan());
+        veXe.setTrangThai(veXeRequest.getTrangThai());
         veXe.setNgayNhan(veXeRequest.getNgayNhan());
         return veXe;
     }
@@ -67,21 +68,27 @@ public class VeXeServiceImpl implements VeXeService {
         if (tuyenXe == null) return new DataResponse("1","/");
         User user = userRepository.findUserById(veXeRequest.getUserId());
         if (user == null) return new DataResponse("2","/");
-        VeXe veXeCheck = veRepository.findVeXeByTuyenXe_IdAndSoGhe(tuyenXe.getId(), veXeRequest.getSoGhe());
-        if (veXeCheck != null) return new DataResponse("3","/");
-        veXeRequest.setTrangThai(TrangThai.INACTIVE);
-        VeXe veXeNew = new VeXe();
-        veXeNew = convertVeXeRequestToVeXe(veXeRequest,veXeNew);
-        if (veXeNew == null) return new DataResponse("4","/");
-        veXeNew = veRepository.save(veXeNew);
-        return new DataResponse("5", veXeNew);
+        List<VeXe> veXeNewList = new ArrayList<VeXe>();
+        for(Integer soGhe : veXeRequest.getSoGhe()){
+            VeXe veXeCheck = veRepository.findVeXeByTuyenXe_IdAndSoGhe(tuyenXe.getId(), soGhe);
+            if (veXeCheck != null) return new DataResponse("3","/");
+            veXeRequest.setTrangThai(TrangThai.INACTIVE);
+            VeXe veXeNew = new VeXe();
+            veXeNew = convertVeXeRequestToVeXe(veXeRequest,veXeNew,soGhe);
+            if (veXeNew == null) return new DataResponse("4","/");
+            veXeNewList.add(veRepository.save(veXeNew));
+        }
+        return new DataResponse("5", veXeNewList);
     }
 
     @Override
     public VeXe updateVeXe(VeXeRequest veXeRequest, Long veXeId) {
         VeXe veXeCheck = veRepository.findVeXeById(veXeId);
         if (veXeCheck==null) return null;
-        VeXe veXeAdd = convertVeXeRequestUpdateToVeXe(veXeRequest, veXeCheck);
+        Integer soGheCheck = 0;
+        for (Integer soGhe : veXeRequest.getSoGhe())
+            soGheCheck = soGhe;
+        VeXe veXeAdd = convertVeXeRequestUpdateToVeXe(veXeRequest, veXeCheck,soGheCheck);
         VeXe veXeNew = veRepository.save(veXeAdd);
         return veXeNew;
     }

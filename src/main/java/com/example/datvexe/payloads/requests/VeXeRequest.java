@@ -7,12 +7,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
 @Data
 public class VeXeRequest {
-    private int soGhe;
+    private List<Integer> soGhe;
     private LocalDate ngayDat;
     private LocalDate ngayNhan;
     private HinhThucThanhToan hinhThucThanhToan;

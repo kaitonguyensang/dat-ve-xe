@@ -5,7 +5,6 @@ import com.example.datvexe.payloads.responses.DataResponse;
 import com.example.datvexe.payloads.responses.ThongKeSaoRequest;
 import com.example.datvexe.services.ThongKeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.Access;

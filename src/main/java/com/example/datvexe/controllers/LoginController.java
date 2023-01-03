@@ -1,10 +1,16 @@
 package com.example.datvexe.controllers;
 
+import com.example.datvexe.common.Role;
 import com.example.datvexe.config.CustomTaiKhoanDetails;
 import com.example.datvexe.config.JwtTokenProvider;
+import com.example.datvexe.models.TaiKhoan;
 import com.example.datvexe.payloads.requests.LoginRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
 import com.example.datvexe.payloads.responses.LoginResponse;
+import com.example.datvexe.repositories.AdminRepository;
+import com.example.datvexe.repositories.NhaXeRepository;
+import com.example.datvexe.repositories.TaiKhoanRepository;
+import com.example.datvexe.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,6 +28,18 @@ public class LoginController {
     @Autowired
     private JwtTokenProvider tokenProvider;
 
+    @Autowired
+    TaiKhoanRepository taiKhoanRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    NhaXeRepository nhaXeRepository;
+
+    @Autowired
+    AdminRepository adminRepository;
+
     @PostMapping("/login")
 //    @PreAuthorize("hasAnyRole('ADMIN')")
     public LoginResponse authenticateUser(@RequestBody LoginRequest loginRequest) {
@@ -37,11 +55,18 @@ public class LoginController {
         // Nếu không xảy ra exception tức là thông tin hợp lệ
         // Set thông tin authentication vào Security Context
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        Long id = 0L;
+        TaiKhoan taiKhoan = taiKhoanRepository.findTaiKhoanByUsername(loginRequest.getUsername());
+        if (taiKhoan.getRole() == Role.USER)
+            id = taiKhoan.getUser().getId();
+        else  if (taiKhoan.getRole() == Role.NHAXE)
+            id = taiKhoan.getNhaXe().getId();
+        else  if (taiKhoan.getRole() == Role.ADMIN)
+            id = taiKhoan.getAdmin().getId();
 
         // Trả về jwt cho người dùng.
         String jwt = tokenProvider.generateToken((CustomTaiKhoanDetails) authentication.getPrincipal());
-        return new LoginResponse(jwt);
-    }
 
-    // Api /api/random yêu cầu phải xác thực mới có thể request
+        return new LoginResponse(jwt,taiKhoan.getRole(),id,taiKhoan.getUsername());
+    }
 }
