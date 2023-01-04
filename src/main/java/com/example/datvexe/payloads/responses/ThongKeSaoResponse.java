@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Data
-public class ThongKeSaoRequest {
+public class ThongKeSaoResponse {
     private int sao1;
     private int sao2;
     private int sao3;

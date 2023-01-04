@@ -29,7 +29,7 @@ public class HangHoaController {
         Long id = Long.valueOf(userId);
         List<HangHoa> hangHoaList = hangHoaService.getHangHoaByUserId(id);
         if (hangHoaList == null) throw new CustomException("200", "Khong co hang hoa nao!!!!");
-        return new DataResponse("200", userId);
+        return new DataResponse("200", hangHoaList);
     }
 
     @GetMapping("/tuyenxe/{tuyenxe-id}")

@@ -15,6 +15,8 @@ public interface TuyenXeRepository extends JpaRepository<TuyenXe, Long> {
 
     TuyenXe findOneById(Long id);
 
+//    Long deleteTuyenXeById(Long id);
+
     List<TuyenXe> findAll();
 
     //    List<TuyenXe> findTuyenXeByBenXeDiBenXeDenNgayDi(BenXe benXeDi, BenXe benXeDen, Date thoiGianKhoiHanh);

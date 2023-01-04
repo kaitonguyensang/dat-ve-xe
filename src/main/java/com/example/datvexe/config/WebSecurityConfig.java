@@ -62,7 +62,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/nhaxe/user/all").permitAll()
                 .antMatchers("/api/nhaxe/user/**").permitAll()
                 .antMatchers("/api/tuyenxe/update/**").permitAll()
-                .antMatchers("/api/vexe/tuyenxe-id/**").permitAll()// Cho phép tất cả mọi người truy cập vào địa chỉ này
+                .antMatchers("/api/vexe/tuyenxe-id/**").permitAll()
+                .antMatchers("/api/thongke/nhaxe/**").permitAll()// Cho phép tất cả mọi người truy cập vào địa chỉ này
                 .anyRequest().authenticated(); // Tất cả các request khác đều cần phải xác thực mới được truy cập
 
         // Thêm một lớp Filter kiểm tra jwt

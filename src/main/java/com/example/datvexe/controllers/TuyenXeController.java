@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import javax.xml.crypto.Data;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class TuyenXeController {
         return new DataResponse("200",tuyenXeList);
     }
 
-    @PostMapping("find-by-address")
+    @PostMapping("/find-by-address")
     public DataResponse findByAddress(@RequestBody TuyenXeRequestByAddress request){
         if (request == null) throw new CustomException("400","Missing request!!!");
         List<TuyenXe> tuyenXeList =tuyenXeService.getTuyenXeByBenXeDiBenXeDen(request);
@@ -61,7 +62,7 @@ public class TuyenXeController {
         return new DataResponse("200",tuyenXeList);
     }
 
-    @PostMapping("find-by-address-date")
+    @PostMapping("/find-by-address-date")
     public DataResponse findByAddressDate(@RequestBody TuyenXeRequestByAddressDate request){
         if (request == null) throw new CustomException("400","Missing request!!!");
         List<TuyenXe> tuyenXeList =tuyenXeService.getTuyenXeByBenXeDiBenXeDenNgayDi(request);
@@ -93,7 +94,7 @@ public class TuyenXeController {
     }
 
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN','NHAXE')")
     public DataResponse deleteTuyenXe(@PathVariable("id") String id){
         if (id ==null) throw new CustomException("400", "Missing id!!!");

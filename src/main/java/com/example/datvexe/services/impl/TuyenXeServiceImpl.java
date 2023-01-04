@@ -14,6 +14,7 @@ import com.example.datvexe.services.TuyenXeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -80,6 +81,8 @@ public class TuyenXeServiceImpl implements TuyenXeService {
     public Long deleteTuyenXe(Long id) {
         TuyenXe tuyenXeDelete = tuyenXeRepository.findOneById(id);
         if (tuyenXeDelete == null) return null;
+//        tuyenXeRepository.deleteTuyenXeById(id);
+//        tuyenXeRepository.deleteById(id);
         tuyenXeRepository.delete(tuyenXeDelete);
         return tuyenXeDelete.getId();
     }
