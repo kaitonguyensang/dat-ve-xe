@@ -57,5 +57,4 @@ public class XeController {
         if (dataResponse.getStatus() == "2") throw new CustomException("404", "Khong ton tai loai xe!!!");
         return new DataResponse("200",dataResponse.getObject());
     }
-
 }

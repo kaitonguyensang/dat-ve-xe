@@ -1,5 +1,6 @@
 package com.example.datvexe.services.impl;
 
+import com.example.datvexe.common.Role;
 import com.example.datvexe.common.TrangThai;
 import com.example.datvexe.models.Admin;
 import com.example.datvexe.models.NhaXe;
@@ -39,6 +40,7 @@ public class SignUpServiceImpl implements SignUpService {
         taiKhoan.setPassword(signUpRequest.getPassword());
         taiKhoan.setRole(signUpRequest.getRole());
         taiKhoan.setTrangThaiHoatDong(TrangThai.ACTIVE);
+        if (signUpRequest.getRole() == Role.NHAXE) taiKhoan.setTrangThaiHoatDong(TrangThai.INACTIVE);
         return taiKhoan;
     }
 

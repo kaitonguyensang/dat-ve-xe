@@ -13,7 +13,7 @@ public class JwtTokenProvider {
     private final String JWT_SECRET = "kaitooooo";
 
     //Thời gian có hiệu lực của chuỗi jwt
-    private final long JWT_EXPIRATION = 15*60*1000;
+    private final long JWT_EXPIRATION = 120*60*1000;
 
     // Tạo ra jwt từ thông tin user
     public String generateToken(CustomTaiKhoanDetails userDetails) {
