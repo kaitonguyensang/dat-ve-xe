@@ -6,18 +6,17 @@ import com.example.datvexe.models.Xe;
 import com.example.datvexe.payloads.requests.TuyenXeRequest;
 import com.example.datvexe.payloads.requests.TuyenXeRequestByAddress;
 import com.example.datvexe.payloads.requests.TuyenXeRequestByAddressDate;
-import com.example.datvexe.payloads.responses.TuyenXeChiTietResponse;
-import com.example.datvexe.repositories.BenXeRepository;
-import com.example.datvexe.repositories.TuyenXeRepository;
-import com.example.datvexe.repositories.XeRepository;
+import com.example.datvexe.repositories.*;
 import com.example.datvexe.services.TuyenXeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Slf4j
 public class TuyenXeServiceImpl implements TuyenXeService {
     @Autowired
     TuyenXeRepository tuyenXeRepository;
@@ -27,6 +26,12 @@ public class TuyenXeServiceImpl implements TuyenXeService {
 
     @Autowired
     XeRepository xeRepository;
+
+    @Autowired
+    HangHoaRepository hangHoaRepository;
+
+    @Autowired
+    VeXeRepository veXeRepository;
 
     public TuyenXe convertTuyenXeRequestToTuyenXe(TuyenXeRequest tuyenXeRequest, TuyenXe tuyenXe) {
         tuyenXe.setNgayDi(tuyenXeRequest.getNgayDi());
@@ -78,13 +83,17 @@ public class TuyenXeServiceImpl implements TuyenXeService {
     }
 
     @Override
+    @Transactional
     public Long deleteTuyenXe(Long id) {
         TuyenXe tuyenXeDelete = tuyenXeRepository.findOneById(id);
-        if (tuyenXeDelete == null) return null;
+//        if (tuyenXeDelete == null) return null;
+//        veXeRepository.deleteAllByTuyenXe(tuyenXeDelete);
+//        hangHoaRepository.deleteAllByTuyenXe(tuyenXeDelete);
+////        tuyenXeRepository.delete(tuyenXeDelete);
 //        tuyenXeRepository.deleteTuyenXeById(id);
-//        tuyenXeRepository.deleteById(id);
+////        return tuyenXeDelete.getId();
         tuyenXeRepository.delete(tuyenXeDelete);
-        return tuyenXeDelete.getId();
+        return id;
     }
 
     public TuyenXe addNewTuyenXe(TuyenXeRequest tuyenXeRequest) {

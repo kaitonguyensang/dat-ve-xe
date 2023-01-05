@@ -1,5 +1,6 @@
 package com.example.datvexe.repositories;
 
+import com.example.datvexe.common.TrangThai;
 import com.example.datvexe.models.TuyenXe;
 import com.example.datvexe.models.User;
 import com.example.datvexe.models.VeXe;
@@ -16,4 +17,6 @@ public interface VeXeRepository extends JpaRepository<VeXe, Long> {
 
     List<VeXe> findVeXeByTuyenXe(TuyenXe tuyenXe);
     VeXe findVeXeById(Long veXeId);
+
+    List<VeXe> findVeXeByTrangThaiOrTrangThai(TrangThai trangThai1, TrangThai trangThai2);
 }

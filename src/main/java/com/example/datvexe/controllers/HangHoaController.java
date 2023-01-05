@@ -69,6 +69,6 @@ public class HangHoaController {
         Long hangHoaId = Long.valueOf(id);
         hangHoaId = hangHoaService.deleteHangHoa(hangHoaId);
         if(hangHoaId == null) throw  new CustomException("404", "Khong tim thay ben xe");
-        return new DataResponse("200", "Xoa thanh cong ben xe id: " + hangHoaId);
+        return new DataResponse("200", "Xoa thanh hang hoa id: " + hangHoaId);
     }
 }

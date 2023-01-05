@@ -45,7 +45,7 @@ public class NhaXeController {
     }
 
     @GetMapping("/admin/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','NHEXE')")
+    @PreAuthorize("hasAnyRole('ADMIN','NHAXE')")
     public DataResponse getById(@PathVariable("id") String id){
         if (id==null) throw new CustomException("400", "Missing field!!!");
         Long nhaXeId = Long.valueOf(id);

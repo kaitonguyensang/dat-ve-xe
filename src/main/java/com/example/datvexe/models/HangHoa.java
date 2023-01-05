@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -31,7 +32,11 @@ public class HangHoa {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "ngaydat")
+    private LocalDate ngayDat;
+
     @Column(name = "trangthai")
+    @Enumerated(EnumType.STRING)
     private TrangThai trangThai;
 
     @ManyToOne

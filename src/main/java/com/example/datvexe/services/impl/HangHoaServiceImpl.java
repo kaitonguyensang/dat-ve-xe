@@ -29,6 +29,7 @@ public class HangHoaServiceImpl implements HangHoaService {
 
     private DataResponse convertHangHoaRequestAddToHangHoa(HangHoaRequest hangHoaRequest){
         HangHoa hangHoa = new HangHoa();
+        hangHoa.setNgayDat(hangHoaRequest.getNgayDat());
         hangHoa.setCanNang(hangHoaRequest.getCanNang());
         hangHoa.setTenNguoNhan(hangHoaRequest.getTenNguoiNhan());
         hangHoa.setSdtNguoiNhan(hangHoaRequest.getSdtNguoiNhan());

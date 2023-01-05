@@ -95,7 +95,7 @@ public class TuyenXeController {
 
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','NHAXE')")
+//    @PreAuthorize("hasAnyRole('ADMIN','NHAXE')")
     public DataResponse deleteTuyenXe(@PathVariable("id") String id){
         if (id ==null) throw new CustomException("400", "Missing id!!!");
         Long tuyenXeId = Long.valueOf(id);
