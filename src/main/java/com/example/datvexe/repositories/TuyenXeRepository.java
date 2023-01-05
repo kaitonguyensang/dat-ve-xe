@@ -1,5 +1,6 @@
 package com.example.datvexe.repositories;
 
+import com.example.datvexe.common.TrangThai;
 import com.example.datvexe.models.BenXe;
 import com.example.datvexe.models.TuyenXe;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,6 +24,8 @@ public interface TuyenXeRepository extends JpaRepository<TuyenXe, Long> {
     List<TuyenXe> findTuyenXeByBenXeDi_TinhThanhContainsAndBenXeDen_TinhThanhContains(String a,String b);
 
     List<TuyenXe> findTuyenXeByBenXeDi_TinhThanhContainsAndBenXeDen_TinhThanhContainsAndAndNgayDiLike(String a,String b, LocalDate date);
+
+    List<TuyenXe> findTuyenXeByTrangThaiOrTrangThai(TrangThai trangThai1, TrangThai trangThai2);
 
 }
 

@@ -59,5 +59,11 @@ public class DanhGiaServiceImpl implements DanhGiaService {
         return danhGia;
     }
 
-    ;
+    @Override
+    public Long deleteDanhGia(Long id) {
+        DanhGia danhGia = danhGiaRepository.findDanhGiaById(id);
+        if (danhGia == null) return null;
+        danhGiaRepository.delete(danhGia);
+        return danhGia.getId();
+    }
 }

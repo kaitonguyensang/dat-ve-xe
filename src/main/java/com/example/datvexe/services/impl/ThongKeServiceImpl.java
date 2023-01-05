@@ -1,5 +1,6 @@
 package com.example.datvexe.services.impl;
 
+import com.example.datvexe.common.ChuyenXe;
 import com.example.datvexe.common.TrangThai;
 import com.example.datvexe.handler.CustomException;
 import com.example.datvexe.models.*;
@@ -225,6 +226,65 @@ public class ThongKeServiceImpl implements ThongKeService {
             thongKeNhaXeLoaiXeResponseList.add(thongKeNhaXeLoaiXeResponse);
         }
         return thongKeNhaXeLoaiXeResponseList;
+    }
+
+    @Override
+    public List<ThongKeNhaXeTuyenXeResponse> getThongKeNhaXeTuyenXe(ThongKeNhaXeRequest request) {
+        List<VeXe> veXeList = veXeRepository.findVeXeByTrangThaiOrTrangThai(TrangThai.ACTIVE, TrangThai.COMPLETED);
+        List<VeXe> veXeNhaXeThangList = new ArrayList<VeXe>();
+        for (VeXe veXe : veXeList){
+            if (veXe.getTuyenXe().getXe().getNhaXe().getId()==request.getNhaXeId() && veXe.getNgayDat().getMonthValue()==request.getMonth() && veXe.getNgayDat().getYear()==request.getYear())
+                veXeNhaXeThangList.add(veXe);
+        }
+        List<HangHoa> hangHoaNhaXeList = hangHoaRepository.findHangHoaByTrangThaiOrTrangThai(TrangThai.ACTIVE, TrangThai.COMPLETED);
+        List<HangHoa> hangHoaNhaXeThangList = new ArrayList<HangHoa>();
+        for (HangHoa hangHoa : hangHoaNhaXeList)
+            if (hangHoa.getTuyenXe().getXe().getNhaXe().getId()==request.getNhaXeId() && hangHoa.getNgayDat().getMonthValue()==request.getMonth() && hangHoa.getNgayDat().getYear()==request.getYear())
+                hangHoaNhaXeThangList.add(hangHoa);
+
+        List<TuyenXe> tuyenXeList = tuyenXeRepository.findTuyenXeByTrangThaiOrTrangThai(TrangThai.ACTIVE, TrangThai.COMPLETED);
+        List<TuyenXe> tuyenXeNhaXeList = new ArrayList<TuyenXe>();
+        for (TuyenXe tuyenXe : tuyenXeList)
+            if (tuyenXe.getXe().getNhaXe().getId()== request.getNhaXeId())
+                tuyenXeNhaXeList.add(tuyenXe);
+        List<ChuyenXe> chuyenXeList = new ArrayList<ChuyenXe>();
+
+        for (TuyenXe tuyenXe : tuyenXeNhaXeList){
+            int temp = 0;
+            for (ChuyenXe chuyenXe : chuyenXeList) {
+                if (tuyenXe.getBenXeDi().getTinhThanh() == chuyenXe.getTinhThanhDi() && tuyenXe.getBenXeDen().getTinhThanh() == chuyenXe.getTinhThanhDen())  temp =1;
+            }
+            if (temp ==0){
+                ChuyenXe chuyenXeCheck = new ChuyenXe();
+                chuyenXeCheck.setTinhThanhDi(tuyenXe.getBenXeDi().getTinhThanh());
+                chuyenXeCheck.setTinhThanhDen(tuyenXe.getBenXeDen().getTinhThanh());
+                chuyenXeList.add(chuyenXeCheck);
+            }
+        }
+        List<ThongKeNhaXeTuyenXeResponse> thongKeNhaXeTuyenXeResponseList = new ArrayList<ThongKeNhaXeTuyenXeResponse>();
+        for (ChuyenXe chuyenXe : chuyenXeList){
+            int tempDoanhThu=0;
+            int tongDoanhThu = 0;
+            ThongKeNhaXeTuyenXeResponse thongKeNhaXeTuyenXeResponse = new ThongKeNhaXeTuyenXeResponse();
+            thongKeNhaXeTuyenXeResponse.setTinhThanhDi(chuyenXe.getTinhThanhDi());
+            thongKeNhaXeTuyenXeResponse.setTinhThanhDen(chuyenXe.getTinhThanhDen());
+            for (VeXe veXe : veXeNhaXeThangList){
+                if (veXe.getTuyenXe().getBenXeDi().getTinhThanh()==chuyenXe.getTinhThanhDi() && veXe.getTuyenXe().getBenXeDen().getTinhThanh() == chuyenXe.getTinhThanhDen()){
+                    tempDoanhThu = tempDoanhThu + veXe.getTuyenXe().getGiaVe();
+                }
+                tongDoanhThu = tongDoanhThu + veXe.getTuyenXe().getGiaVe();
+            }
+            for (HangHoa hangHoa : hangHoaNhaXeThangList){
+                if (hangHoa.getTuyenXe().getBenXeDi().getTinhThanh()==chuyenXe.getTinhThanhDi() && hangHoa.getTuyenXe().getBenXeDen().getTinhThanh()==chuyenXe.getTinhThanhDen()){
+                    tempDoanhThu = tempDoanhThu + hangHoa.getGia();
+                }
+                tongDoanhThu = tongDoanhThu + hangHoa.getGia();
+            }
+            thongKeNhaXeTuyenXeResponse.setTyLe(((float)tempDoanhThu/tongDoanhThu) * 100);
+            thongKeNhaXeTuyenXeResponse.setTongDoanhThu(tempDoanhThu);
+            thongKeNhaXeTuyenXeResponseList.add(thongKeNhaXeTuyenXeResponse);
+        }
+        return thongKeNhaXeTuyenXeResponseList;
     }
 
 }

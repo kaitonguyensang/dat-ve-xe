@@ -86,6 +86,6 @@ public class HangHoaServiceImpl implements HangHoaService {
     @Override
     public List<HangHoa> getHangHoaByTuyenXeId(Long tuyenXeId) {
         List<HangHoa> hangHoaList = hangHoaRepository.findHangHoaByTuyenXe_Id(tuyenXeId);
-        return null;
+        return hangHoaList;
     }
 }

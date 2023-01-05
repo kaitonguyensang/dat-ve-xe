@@ -15,4 +15,6 @@ public interface VeXeService {
     List<VeXe> getAllVeXeByTuyenXeId(Long tuyenXe);
     DataResponse addVeXe(VeXeRequest veXeRequest);
     VeXe updateVeXe(VeXeRequest veXeRequest,Long veXeId);
+
+    Long deleteVeXe(Long veXeId);
 }

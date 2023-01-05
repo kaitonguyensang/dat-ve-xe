@@ -12,4 +12,6 @@ public interface DanhGiaService {
     DanhGia addDanhGia(DanhGiaRequest danhGiaRequest);
     DanhGia getDanhGiaById(Long id);
     List<DanhGia> getDanhGiaByNhaXeId(Long nhaXeId);
+
+    Long deleteDanhGia(Long id);
 }

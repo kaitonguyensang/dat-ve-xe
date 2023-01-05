@@ -11,6 +11,8 @@ import java.util.List;
 public interface XeService {
     List<Xe> getAll();
 
+    List<Xe> getAllByNhaXeId(Long nhaXeId);
+
     Xe getById(Long id);
 
     DataResponse addXe(XeRequest value);

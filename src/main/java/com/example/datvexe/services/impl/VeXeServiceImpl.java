@@ -92,4 +92,12 @@ public class VeXeServiceImpl implements VeXeService {
         VeXe veXeNew = veRepository.save(veXeAdd);
         return veXeNew;
     }
+
+    @Override
+    public Long deleteVeXe(Long veXeId) {
+        VeXe veXeCheck = veRepository.findVeXeById(veXeId);
+        if (veXeCheck == null) return null;
+        veRepository.delete(veXeCheck);
+        return veXeCheck.getId();
+    }
 }

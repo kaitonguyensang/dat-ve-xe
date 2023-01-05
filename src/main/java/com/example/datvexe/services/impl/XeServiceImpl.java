@@ -37,6 +37,13 @@ public class XeServiceImpl implements XeService {
     @Override
     public List<Xe> getAll() {
         List<Xe> listXe = xeRepository.findAll();
+        if(listXe == null) return null;
+        return listXe;
+    }
+
+    @Override
+    public List<Xe> getAllByNhaXeId(Long nhaXeId) {
+        List<Xe> listXe = xeRepository.findXeByNhaXe_Id(nhaXeId);
         if (listXe == null) return null;
         return listXe;
     }

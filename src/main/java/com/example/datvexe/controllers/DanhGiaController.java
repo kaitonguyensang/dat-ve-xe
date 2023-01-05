@@ -48,4 +48,13 @@ public class DanhGiaController {
         return new DataResponse("200",danhGia);
     }
 
+    @DeleteMapping("{id}")
+    public DataResponse deleteDanhGia(@PathVariable("id") String id){
+        if (id == null) throw new CustomException("400","Missing id!!!");
+        Long danhGiaId = Long.valueOf(id);
+        danhGiaId = danhGiaService.deleteDanhGia(danhGiaId);
+        if(danhGiaId == null) throw  new CustomException("404", "Khong tim thay ve xe");
+        return new DataResponse("200", "Xoa thanh cong ve xe id: " + danhGiaId);
+    }
+
 }

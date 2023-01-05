@@ -62,4 +62,14 @@ public class VeXeController {
         if (veXe == null) throw new CustomException("404","Thay doi thong tin ve xe that bai!!!");
         return new DataResponse("200",veXe);
     }
+
+    @DeleteMapping("{id}")
+    @PreAuthorize("hasAnyRole('USER','NHAXE')")
+    public DataResponse deleteVeXe(@PathVariable("id") String id){
+        if (id == null) throw new CustomException("400","Missing id!!!");
+        Long veXeId = Long.valueOf(id);
+        veXeId = veXeService.deleteVeXe(veXeId);
+        if(veXeId == null) throw  new CustomException("404", "Khong tim thay ve xe");
+        return new DataResponse("200", "Xoa thanh cong ve xe id: " + veXeId);
+    }
 }

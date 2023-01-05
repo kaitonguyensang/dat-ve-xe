@@ -37,7 +37,7 @@ public class HangHoaController {
     public DataResponse getHangHoaByTuyenXeId(@PathVariable("tuyenxe-id") String tuyenXeId){
         if (tuyenXeId == null) throw new CustomException("400", "Missing field");
         Long id = Long.valueOf(tuyenXeId);
-        List<HangHoa> hangHoaList = hangHoaService.getHangHoaByUserId(id);
+        List<HangHoa> hangHoaList = hangHoaService.getHangHoaByTuyenXeId(id);
         if (hangHoaList == null) throw new CustomException("200", "Khong co hang hoa nao!!!!");
         return new DataResponse("200", hangHoaList);
     }
@@ -68,7 +68,7 @@ public class HangHoaController {
         if (id == null) throw new CustomException("400","Missing id!!!");
         Long hangHoaId = Long.valueOf(id);
         hangHoaId = hangHoaService.deleteHangHoa(hangHoaId);
-        if(hangHoaId == null) throw  new CustomException("404", "Khong tim thay ben xe");
-        return new DataResponse("200", "Xoa thanh hang hoa id: " + hangHoaId);
+        if(hangHoaId == null) throw  new CustomException("404", "Khong tim thay hang hoa");
+        return new DataResponse("200", "Xoa thanh cong hang hoa id: " + hangHoaId);
     }
 }

@@ -21,4 +21,6 @@ public interface ThongKeService {
     List<ThongKeAdminDoanhThuResponse> getThongKeAdminDoanhThu(ThongKeAdminRequest request);
 
     List<ThongKeNhaXeLoaiXeResponse> getThongKeNhaXeLoaiXe(ThongKeNhaXeRequest request);
+
+    List<ThongKeNhaXeTuyenXeResponse> getThongKeNhaXeTuyenXe(ThongKeNhaXeRequest request);
 }
