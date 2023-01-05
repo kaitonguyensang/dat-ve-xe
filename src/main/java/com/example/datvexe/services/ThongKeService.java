@@ -1,10 +1,8 @@
 package com.example.datvexe.services;
 
-import com.example.datvexe.payloads.responses.SaoTrungBinhAllResponse;
+import com.example.datvexe.payloads.requests.ThongKeNhaXeRequest;
+import com.example.datvexe.payloads.responses.*;
 import com.example.datvexe.payloads.requests.ThongKeAdminRequest;
-import com.example.datvexe.payloads.responses.ThongKeAdminDoanhThuResponse;
-import com.example.datvexe.payloads.responses.ThongKeAdminUseResponse;
-import com.example.datvexe.payloads.responses.ThongKeSaoResponse;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -21,4 +19,6 @@ public interface ThongKeService {
     List<ThongKeAdminUseResponse> getThongKeAdminUse(ThongKeAdminRequest request);
 
     List<ThongKeAdminDoanhThuResponse> getThongKeAdminDoanhThu(ThongKeAdminRequest request);
+
+    List<ThongKeNhaXeLoaiXeResponse> getThongKeNhaXeLoaiXe(ThongKeNhaXeRequest request);
 }

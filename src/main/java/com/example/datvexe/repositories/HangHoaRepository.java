@@ -2,6 +2,7 @@ package com.example.datvexe.repositories;
 
 import com.example.datvexe.common.TrangThai;
 import com.example.datvexe.models.HangHoa;
+import com.example.datvexe.models.NhaXe;
 import com.example.datvexe.models.TuyenXe;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -2,19 +2,11 @@ package com.example.datvexe.services.impl;
 
 import com.example.datvexe.common.TrangThai;
 import com.example.datvexe.handler.CustomException;
-import com.example.datvexe.models.DanhGia;
-import com.example.datvexe.models.HangHoa;
-import com.example.datvexe.models.NhaXe;
-import com.example.datvexe.models.VeXe;
+import com.example.datvexe.models.*;
 import com.example.datvexe.payloads.requests.ThongKeAdminRequest;
-import com.example.datvexe.payloads.responses.SaoTrungBinhAllResponse;
-import com.example.datvexe.payloads.responses.ThongKeAdminDoanhThuResponse;
-import com.example.datvexe.payloads.responses.ThongKeAdminUseResponse;
-import com.example.datvexe.payloads.responses.ThongKeSaoResponse;
-import com.example.datvexe.repositories.DanhGiaRepository;
-import com.example.datvexe.repositories.HangHoaRepository;
-import com.example.datvexe.repositories.NhaXeRepository;
-import com.example.datvexe.repositories.VeXeRepository;
+import com.example.datvexe.payloads.requests.ThongKeNhaXeRequest;
+import com.example.datvexe.payloads.responses.*;
+import com.example.datvexe.repositories.*;
 import com.example.datvexe.services.ThongKeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +29,15 @@ public class ThongKeServiceImpl implements ThongKeService {
 
     @Autowired
     HangHoaRepository hangHoaRepository;
+
+    @Autowired
+    LoaiXeRepository loaiXeRepository;
+
+    @Autowired
+    TuyenXeRepository tuyenXeRepository;
+
+    @Autowired
+    XeRepository xeRepository;
 
     @Override
     public float tinhTrungBinhSao(Long nhaXeId) {
@@ -150,29 +151,80 @@ public class ThongKeServiceImpl implements ThongKeService {
             }
         }
         List<NhaXe> nhaXeList = nhaXeRepository.findAll();
-        int tongDoanhThu=0;
+
         for (NhaXe nhaXe : nhaXeList) {
-            int tempDoanhThuVe = 0;
-            int tempDoanhThuHangHoa = 0;
+            int tempDoanhThu = 0;
+            int tongDoanhThu=0;
             ThongKeAdminDoanhThuResponse thongKeAdminDoanhThuResponse = new ThongKeAdminDoanhThuResponse();
             thongKeAdminDoanhThuResponse.setNhaXeId(nhaXe.getId());
             thongKeAdminDoanhThuResponse.setTenNhaXe(nhaXe.getTenNhaXe());
             for (VeXe veXe : veXes) {
                 if (nhaXe.getId() == veXe.getTuyenXe().getXe().getNhaXe().getId()) {
-                    tempDoanhThuVe = tempDoanhThuVe + veXe.getTuyenXe().getGiaVe();
+                    tempDoanhThu = tempDoanhThu + veXe.getTuyenXe().getGiaVe();
                 }
                 tongDoanhThu = tongDoanhThu + veXe.getTuyenXe().getGiaVe();
             }
             for (HangHoa hangHoaCheck : hangHoas) {
                 if (nhaXe.getId() == hangHoaCheck.getTuyenXe().getXe().getNhaXe().getId())
-                    tempDoanhThuHangHoa = tempDoanhThuHangHoa + hangHoaCheck.getGia();
+                    tempDoanhThu = tempDoanhThu + hangHoaCheck.getGia();
                 tongDoanhThu = tongDoanhThu + hangHoaCheck.getGia();
             }
-            thongKeAdminDoanhThuResponse.setDoanhThu(tempDoanhThuVe+tempDoanhThuHangHoa);
-            thongKeAdminDoanhThuResponse.setTyLeDoanhThu((float) (tempDoanhThuVe+tempDoanhThuHangHoa)/(float) tongDoanhThu*100);
+            thongKeAdminDoanhThuResponse.setDoanhThu(tempDoanhThu);
+            thongKeAdminDoanhThuResponse.setTyLeDoanhThu(((float) tempDoanhThu/(float) tongDoanhThu)*100);
             thongKeAdminDoanhThuResponseList.add(thongKeAdminDoanhThuResponse);
         }
         return thongKeAdminDoanhThuResponseList;
+    }
+
+    @Override
+    public List<ThongKeNhaXeLoaiXeResponse> getThongKeNhaXeLoaiXe(ThongKeNhaXeRequest request) {
+        List<VeXe> veXeList = veXeRepository.findVeXeByTrangThaiOrTrangThai(TrangThai.ACTIVE, TrangThai.COMPLETED);
+        List<VeXe> veXeNhaXeThangList = new ArrayList<VeXe>();
+        for (VeXe veXe : veXeList){
+            if (veXe.getTuyenXe().getXe().getNhaXe().getId()==request.getNhaXeId() && veXe.getNgayDat().getMonthValue()==request.getMonth() && veXe.getNgayDat().getYear()==request.getYear())
+                veXeNhaXeThangList.add(veXe);
+        }
+        List<HangHoa> hangHoaNhaXeList = hangHoaRepository.findHangHoaByTrangThaiOrTrangThai(TrangThai.ACTIVE, TrangThai.COMPLETED);
+        List<HangHoa> hangHoaNhaXeThangList = new ArrayList<HangHoa>();
+        for (HangHoa hangHoa : hangHoaNhaXeList)
+            if (hangHoa.getTuyenXe().getXe().getNhaXe().getId()==request.getNhaXeId() && hangHoa.getNgayDat().getMonthValue()==request.getMonth() && hangHoa.getNgayDat().getYear()==request.getYear())
+                hangHoaNhaXeThangList.add(hangHoa);
+        List<Long> idLoaiXeList = new ArrayList<Long>();
+        List<LoaiXe> loaiXeList = loaiXeRepository.findAll();
+        List<Xe> xeNhaXeList = xeRepository.findXeByNhaXe_Id(request.getNhaXeId());
+        for (LoaiXe loaiXe : loaiXeList){
+            for (Xe xe : xeNhaXeList){
+                if (loaiXe.getId() == xe.getLoaiXe().getId()) {
+                    idLoaiXeList.add(loaiXe.getId());
+                    break;
+                }
+            }
+        }
+        List<ThongKeNhaXeLoaiXeResponse> thongKeNhaXeLoaiXeResponseList = new ArrayList<ThongKeNhaXeLoaiXeResponse>();
+        for (Long idLoaiXe : idLoaiXeList){
+            int tempDoanhThu=0;
+            int tongDoanhThu = 0;
+            LoaiXe loaiXe = loaiXeRepository.findOneById(idLoaiXe);
+            ThongKeNhaXeLoaiXeResponse thongKeNhaXeLoaiXeResponse = new ThongKeNhaXeLoaiXeResponse();
+            thongKeNhaXeLoaiXeResponse.setLoaiXeId(loaiXe.getId());
+            thongKeNhaXeLoaiXeResponse.setTenLoaiXe(loaiXe.getTenLoaiXe());
+            for (VeXe veXe : veXeNhaXeThangList){
+                if (veXe.getTuyenXe().getXe().getLoaiXe().getId()==loaiXe.getId()){
+                    tempDoanhThu = tempDoanhThu + veXe.getTuyenXe().getGiaVe();
+                }
+                tongDoanhThu = tongDoanhThu + veXe.getTuyenXe().getGiaVe();
+            }
+            for (HangHoa hangHoa : hangHoaNhaXeThangList){
+                if (hangHoa.getTuyenXe().getXe().getLoaiXe().getId()==loaiXe.getId()){
+                    tempDoanhThu = tempDoanhThu + hangHoa.getGia();
+                }
+                tongDoanhThu = tongDoanhThu + hangHoa.getGia();
+            }
+            thongKeNhaXeLoaiXeResponse.setTyLe(((float)tempDoanhThu/tongDoanhThu) * 100);
+            thongKeNhaXeLoaiXeResponse.setTongDoanhThu(tempDoanhThu);
+            thongKeNhaXeLoaiXeResponseList.add(thongKeNhaXeLoaiXeResponse);
+        }
+        return thongKeNhaXeLoaiXeResponseList;
     }
 
 }

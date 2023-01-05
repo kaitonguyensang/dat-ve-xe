@@ -1,6 +1,7 @@
 package com.example.datvexe.controllers;
 
 import com.example.datvexe.handler.CustomException;
+import com.example.datvexe.payloads.requests.ThongKeNhaXeRequest;
 import com.example.datvexe.payloads.responses.*;
 import com.example.datvexe.payloads.requests.ThongKeAdminRequest;
 import com.example.datvexe.services.ThongKeService;
@@ -52,5 +53,14 @@ public class ThongKeController {
         List<ThongKeAdminDoanhThuResponse> thongKeAdminResponse = thongKeService.getThongKeAdminDoanhThu(thongKeAdminRequest);
         return new DataResponse("200",thongKeAdminResponse);
     }
+
+    @PostMapping("/nhaxe/loai-xe")
+    public DataResponse getThongKeAdminLaiXe(@RequestBody ThongKeNhaXeRequest thongKeNhaXeRequest){
+        if (thongKeNhaXeRequest == null) throw new CustomException("400","Missing field!!!");
+        List<ThongKeNhaXeLoaiXeResponse> thongKeNhaXeLoaiXeResponses = thongKeService.getThongKeNhaXeLoaiXe(thongKeNhaXeRequest);
+        return new DataResponse("200",thongKeNhaXeLoaiXeResponses);
+    }
+
+
 
 }
